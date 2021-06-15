@@ -1,6 +1,7 @@
 const app = require('express')();
 const Discord = require('discord.js');
 const client = new Discord.Client();
+var sha256 = require('js-sha256');
 const dotenv = require('dotenv');
 dotenv.config();
 
