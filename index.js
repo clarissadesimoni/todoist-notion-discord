@@ -23,7 +23,7 @@ app.get('', (req, res) => {
 	res.send('Hello World');
 });
 
-app.post('/', (req, res) => {
+app.post('', (req, res) => {
     if(req.get('User-Agent') === 'Todoist-Webhooks') {
         var delivered_hmac = req.get('X-Todoist-Hmac-SHA256');
         var computed_hmac = crypto.HmacSHA256(req.body, "bcf170584a2b4520860ba58a1d9b0119").toString(crypto.enc.Base64);
