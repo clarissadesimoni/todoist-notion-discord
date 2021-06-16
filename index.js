@@ -40,6 +40,7 @@ app.post('', (req, res) => {
         } else {
             client.users.fetch(process.env.MY_USER_ID).then(user => user.send('A 403 (Unauthorized) status code has been sent to a request'));
             res.status(403).send('Unauthorized');
+            console.log(req.body);
         }
     } else {
         client.users.fetch(process.env.MY_USER_ID).then(user => user.send('A 400 (Bad request) status code has been sent to a request'));
@@ -48,8 +49,8 @@ app.post('', (req, res) => {
     //handle notion
 
 
-    client.users.fetch(process.env.MY_USER_ID).then(user => user.send('You can update your tasklist if you want'));
-	res.status(200).send('Event handled');
+    // client.users.fetch(process.env.MY_USER_ID).then(user => user.send('You can update your tasklist if you want'));
+	// res.status(200).send('Event handled');
 })
 
 
