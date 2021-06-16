@@ -2,6 +2,7 @@ const express = require('express');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 var crypto = require('crypto-js');
+require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 
