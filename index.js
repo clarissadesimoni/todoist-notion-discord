@@ -53,7 +53,7 @@ app.post('', (req, res) => {
 })
 
 
-client.login(process.env);
+client.login(process.env.BOT_TOKEN);
 app.listen(PORT, () => {
 	console.log(`App up at port ${PORT}`);
 });
