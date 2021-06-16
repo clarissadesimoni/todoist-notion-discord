@@ -26,7 +26,7 @@ app.get('', (req, res) => {
 app.post('', (req, res) => {
     if(req.get('User-Agent') === 'Todoist-Webhooks') {
         var delivered_hmac = req.get('X-Todoist-Hmac-SHA256');
-        var computed_hmac = crypto.createHmac('sha256', key).update(JSON.stringify(req.body)).digest('base64');
+        var computed_hmac = crypto.createHmac('sha256', process.env.TODOIST_CLIENT_SECRET).update(JSON.stringify(req.body)).digest('base64');
         if(delivered_hmac === computed_hmac) {
             if(req.body.event_name === 'item:added' && req.body.event_data.description === '') {
                 // add task to notion
