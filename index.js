@@ -1,7 +1,7 @@
 const express = require('express');
 const Discord = require('discord.js');
 const client = new Discord.Client();
-var crypto = require('crypto-js');
+var crypto = require('crypto');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
@@ -13,7 +13,6 @@ app.use(express.json());
 process.on('unhandledRejection', error => {
     // Will print "unhandledRejection err is not defined"
     console.log('unhandledRejection', error.message);
-    console.log('Discord token: ' + process.env.BOT_TOKEN)
 });
 
 client.on('ready', () => {
@@ -27,7 +26,7 @@ app.get('', (req, res) => {
 app.post('', (req, res) => {
     if(req.get('User-Agent') === 'Todoist-Webhooks') {
         var delivered_hmac = req.get('X-Todoist-Hmac-SHA256');
-        var computed_hmac = crypto.HmacSHA256(req.body, process.env.TODOIST_CLIENT_SECRET).toString(crypto.enc.Base64);
+        var computed_hmac = crypto.createHmac('sha256', key).update(JSON.stringify(req.body)).digest('base64');
         if(delivered_hmac === computed_hmac) {
             if(req.body.event_name === 'item:added' && req.body.event_data.description === '') {
                 // add task to notion
@@ -37,6 +36,8 @@ app.post('', (req, res) => {
                     // complete task on notion
                 }
             }
+            client.users.fetch(process.env.MY_USER_ID).then(user => user.send('You can update your tasklist if you want'));
+            res.status(200).send('Event handled');
         } else {
             client.users.fetch(process.env.MY_USER_ID).then(user => user.send('A 403 (Unauthorized) status code has been sent to a request'));
             res.status(403).send('Unauthorized');
@@ -50,8 +51,6 @@ app.post('', (req, res) => {
     //handle notion
 
 
-    // client.users.fetch(process.env.MY_USER_ID).then(user => user.send('You can update your tasklist if you want'));
-	// res.status(200).send('Event handled');
 })
 
 
