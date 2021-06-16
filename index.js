@@ -1,4 +1,4 @@
-const app = require('express')();
+const express = require('express');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 var crypto = require('crypto-js');
@@ -7,6 +7,7 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
+app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
