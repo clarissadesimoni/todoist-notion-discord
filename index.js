@@ -40,6 +40,7 @@ app.post('', (req, res) => {
         } else {
             client.users.fetch(process.env.MY_USER_ID).then(user => user.send('A 403 (Unauthorized) status code has been sent to a request'));
             res.status(403).send('Unauthorized');
+            console.log(`delivered_hmac: ${delivered_hmac}\ncomputed_hmac: ${computed_hmac}\n`)
             console.log(req.body);
         }
     } else {
