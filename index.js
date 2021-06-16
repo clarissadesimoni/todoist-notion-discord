@@ -29,14 +29,24 @@ app.post('', (req, res) => {
         var computed_hmac = crypto.createHmac('sha256', process.env.TODOIST_CLIENT_SECRET).update(JSON.stringify(req.body)).digest('base64');
         if(delivered_hmac === computed_hmac) {
             if(req.body.event_name === 'item:added' && req.body.event_data.description === '') {
+                // this task is in todoist but not on notion
+                
                 // add task to notion
                 // idea: ask user for data
+
+
             } else {
                 if(req.body.event_name === 'item:completed' && req.body.event_data.description !== '') {
+                    // this task is completed on todoist but not on notion
                     // complete task on notion
+                }else {
+                    if(req.body.event_name === 'item:updated' && req.body.event_data.description !== '') {
+                        // this task has to be updated in notion
+                        // update task in notion
+                    }
                 }
             }
-            client.users.fetch(process.env.MY_USER_ID).then(user => user.send('You can update your tasklist if you want'));
+            // client.users.fetch(process.env.MY_USER_ID).then(user => user.send('You can update your tasklist if you want'));
             res.status(200).send('Event handled');
         } else {
             client.users.fetch(process.env.MY_USER_ID).then(user => user.send('A 403 (Unauthorized) status code has been sent to a request'));
