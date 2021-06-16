@@ -17,7 +17,7 @@ process.on('unhandledRejection', error => {
 });
 
 client.on('ready', () => {
-    client.users.fetch('524324225843068941').then(user => user.send('Hey, The bot is up!'));
+    client.users.fetch(process.env.MY_USER_ID).then(user => user.send('Hey, The bot is up!'));
 });
 
 app.get('', (req, res) => {
@@ -27,7 +27,7 @@ app.get('', (req, res) => {
 app.post('', (req, res) => {
     if(req.get('User-Agent') === 'Todoist-Webhooks') {
         var delivered_hmac = req.get('X-Todoist-Hmac-SHA256');
-        var computed_hmac = crypto.HmacSHA256(req.body, "bcf170584a2b4520860ba58a1d9b0119").toString(crypto.enc.Base64);
+        var computed_hmac = crypto.HmacSHA256(req.body, process.env.TODOIST_CLIENT_SECRET).toString(crypto.enc.Base64);
         if(delivered_hmac === computed_hmac) {
             if(req.body.event_name === 'item:added' && req.body.event_data.description === '') {
                 // add task to notion
@@ -38,17 +38,17 @@ app.post('', (req, res) => {
                 }
             }
         } else {
-            client.users.fetch('524324225843068941').then(user => user.send('A 403 (Unauthorized) status code has been sent to a request'));
+            client.users.fetch(process.env.MY_USER_ID).then(user => user.send('A 403 (Unauthorized) status code has been sent to a request'));
             res.status(403).send('Unauthorized');
         }
     } else {
-        client.users.fetch('524324225843068941').then(user => user.send('A 400 (Bad request) status code has been sent to a request'));
+        client.users.fetch(process.env.MY_USER_ID).then(user => user.send('A 400 (Bad request) status code has been sent to a request'));
         res.status(400).send('Bad request');
     }
     //handle notion
 
 
-    client.users.fetch('524324225843068941').then(user => user.send('You can update your tasklist if you want'));
+    client.users.fetch(process.env.MY_USER_ID).then(user => user.send('You can update your tasklist if you want'));
 	res.status(200).send('Event handled');
 })
 
