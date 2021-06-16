@@ -12,6 +12,7 @@ app.use(express.json());
 process.on('unhandledRejection', error => {
     // Will print "unhandledRejection err is not defined"
     console.log('unhandledRejection', error.message);
+    console.log('Discord token: ' + process.env.BOT_TOKEN)
 });
 
 client.on('ready', () => {
