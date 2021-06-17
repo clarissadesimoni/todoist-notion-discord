@@ -2,7 +2,7 @@ const express = require('express');
 const Discord = require('discord.js');
 const discord = new Discord.Client();
 var crypto = require('crypto');
-const notion = new require('@notionhq/client').constructor({auth: process.env.NOTION_API_KEY});
+const notionClient = new require('@notionhq/client').constructor({auth: process.env.NOTION_API_KEY});
 
 require('dotenv').config();
 
