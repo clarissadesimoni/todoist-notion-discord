@@ -12,10 +12,10 @@ app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-process.on('unhandledRejection', error => {
-    // Will print "unhandledRejection err is not defined"
-    console.log('unhandledRejection', error.message);
-});
+// process.on('unhandledRejection', error => {
+//     // Will print "unhandledRejection err is not defined"
+//     console.log('unhandledRejection', error.message);
+// });
 
 function message_user(text) {
     discord.users.fetch(process.env.MY_USER_ID).then(user => user.send(text));
