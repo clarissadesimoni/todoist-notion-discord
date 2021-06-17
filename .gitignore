@@ -2,3 +2,5 @@
 .DS_Store
 .env
 prova.js
+/todoist_ts_docs
+note*.txt
