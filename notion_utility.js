@@ -3,7 +3,7 @@ var notionHelper = (function () {
 
     require('dotenv').config();
 
-    my.api = new Client({auth: process.env.NOTION_API_KEY});
+    my.api = new require('@notionhq/client').constructor({auth: process.env.NOTION_API_KEY});
     my.prova = function () {
         return 'it works!';
     }
