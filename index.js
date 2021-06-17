@@ -2,13 +2,11 @@ const express = require('express');
 const Discord = require('discord.js');
 const discord = new Discord.Client();
 var crypto = require('crypto');
-const notionClient = new require('@notionhq/client').constructor({auth: process.env.NOTION_API_KEY});
+const notion = new require('@notionhq/client').constructor({auth: process.env.NOTION_API_KEY});
 
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
-
-const notion = new Client({auth: process.env.NOTION_API_KEY});
 
 app = express();
 app.use(express.urlencoded({ extended: true }));
