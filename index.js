@@ -46,7 +46,7 @@ app.post('', (req, res) => {
                     // add task to notion
                     // idea: ask user for data
 
-                    // remeber discord's user.dmchannel.awaitmessages
+                    // remeber discord's user.dmChannel.awaitmessages
                 } else {
                     if(req.body.event_name === 'item:completed' && req.body.event_data.description !== '') {
                         // this task is completed on todoist but not on notion
