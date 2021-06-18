@@ -2,7 +2,7 @@ const express = require('express');
 const Discord = require('discord.js');
 const discord = new Discord.Client();
 var crypto = require('crypto');
-const notion = new require('@notionhq/client').constructor({auth: process.env.NOTION_API_KEY});
+const notion = require('./notion_utility'); // can call it like notion.funcName(params);
 
 require('dotenv').config();
 
@@ -40,7 +40,11 @@ app.post('', (req, res) => {
         if(delivered_hmac === computed_hmac) {
             if (req.body.event_name.contains('item')) {
                 if(req.body.event_name === 'item:added' && req.body.event_data.description === '') {
-                    message_user('A new task has been added to Todoist');
+                    var msg = new Discord.MessageEmbed()
+                        .setTitle('New task added to Todoist')
+                        .addField({name: 'Task name', value: req.body.event_data.content, inline: true})
+                        .addField({name: 'Task id', value: `${req.body.event_data.id}`, inline: true});
+                    message_embed_user(msg);
                     // this task is in todoist but not on notion
                     
                     // add task to notion
@@ -51,10 +55,26 @@ app.post('', (req, res) => {
                     if(req.body.event_name === 'item:completed' && req.body.event_data.description !== '') {
                         // this task is completed on todoist but not on notion
                         // complete task on notion
-                        message_user('You can update your tasklist if you want');
+                        notion.completeTask(req.body.event_data.description).then(status => {
+                            if(status === 200) {
+                                // later on: create tasklist function
+                                message_user('You can update your tasklist if you want');
+                            } else {
+                                var msg = new Discord.MessageEmbed()
+                                    .setTitle('There was a problem with completing a task')
+                                    .addField({name: 'Task name', value: req.body.event_data.content, inline: true})
+                                    .addField({name: 'Todoist task id', value: `${req.body.event_data.id}`, inline: true})
+                                    .addField({name: 'Notion page id', value: `${req.body.event_data.id}`, inline: true});
+                                message_embed_user(msg);
+                            }
+                        })
                     }else {
                         if(req.body.event_name === 'item:updated' && req.body.event_data.description !== '') {
-                            message_user('A task has been updated Todoist');
+                            var msg = new Discord.MessageEmbed()
+                                .setTitle('Task updated in Todoist')
+                                .addField({name: 'Task name', value: req.body.event_data.content, inline: true})
+                                .addField({name: 'Task id', value: `${req.body.event_data.id}`, inline: true});
+                            message_embed_user(msg);
                             // this task has to be updated in notion
                             // update task in notion
                         }
