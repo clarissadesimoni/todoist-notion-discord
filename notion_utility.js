@@ -53,5 +53,4 @@ var notionHelper = (function () {
 	return my;
 }());
 
-// mymodule.js
 module.exports = notionHelper;
