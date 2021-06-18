@@ -21,12 +21,12 @@ function message_user(text) {
     discord.users.fetch(process.env.MY_USER_ID).then(user => user.send(text));
 }
 
+function message_embed_user(msg) {
+    discord.users.fetch(process.env.MY_USER_ID).then(user => user.createDM()).then(channel => channel.send(msg));
+}
+
 discord.on('ready', () => {
-    var msg = new Discord.MessageEmbed()
-        .setTitle('Prova')
-        .setDescription('it works');
-        discord.users.fetch(process.env.MY_USER_ID).then(user => user.dmChannel.send(msg));
-    //message_user('Hey, The bot is up!');
+    message_user('Hey, The bot is up!');
 });
 
 app.get('', (req, res) => {
@@ -66,7 +66,7 @@ app.post('', (req, res) => {
                         .setTitle('New project added to Todoist')
                         .addField({name: 'Project name', value: req.body.event_data.name, inline: true})
                         .addField({name: 'Project id', value: `${req.body.event_data.id}`, inline: true});
-                    discord.users.fetch(process.env.MY_USER_ID).then(user => user.dmChannel.send(msg));
+                    message_embed_user(msg);
                 }
             }
             // message_user('You can update your tasklist if you want');
