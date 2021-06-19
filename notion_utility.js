@@ -4,6 +4,14 @@ var notionHelper = (function () {
     require('dotenv').config();
 
     my.api = new require('@notionhq/client').constructor({auth: process.env.NOTION_API_KEY});
+
+    my.createTask = async function(name) {
+        const response = await my.api.pages.create({
+            
+        });
+        return response.id;
+    }
+
     my.completeTask = async function (notion_page_id) {
         const response = await my.api.pages.update({
             page_id: notification_page_id,

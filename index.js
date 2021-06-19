@@ -47,6 +47,16 @@ app.post('', (req, res) => {
                     message_embed_user(msg);
                     // this task is in todoist but not on notion
                     
+                    // message_user('Do you want to add this task to Notion?');
+                    // let channel = discord.users.fetch(process.env.MY_USER_ID).then(user => user.createDM());
+                    // const filter = m => m.content.match(/^(y(|es)|n(|o))$/);
+                    // const collector = channel.createMessageCollector(filter, {max: 1, time: 15000});
+                    // collector.on('collect', m => {
+                    //     if(m.content.includes('y')) {
+                            
+                    //     }
+                    // });
+
                     // add task to notion
                     // idea: ask user for data
 
