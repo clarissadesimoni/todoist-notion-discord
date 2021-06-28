@@ -1,4 +1,6 @@
 /node_modules
+/discord
+/notion
 .DS_Store
 .env
 prova.js

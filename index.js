@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const discord = new Discord.Client();
 var crypto = require('crypto');
 const notion = require('./notion_utility'); // can call it like notion.funcName(params);
+const { message } = require('statuses');
 
 require('dotenv').config();
 
@@ -47,15 +48,29 @@ app.post('', (req, res) => {
                     message_embed_user(msg);
                     // this task is in todoist but not on notion
                     
-                    // message_user('Do you want to add this task to Notion?');
-                    // let channel = discord.users.fetch(process.env.MY_USER_ID).then(user => user.createDM());
-                    // const filter = m => m.content.match(/^(y(|es)|n(|o))$/);
-                    // const collector = channel.createMessageCollector(filter, {max: 1, time: 15000});
-                    // collector.on('collect', m => {
-                    //     if(m.content.includes('y')) {
-                            
-                    //     }
-                    // });
+                    message_user('Do you want to add this task to Notion?');
+                    let channel = discord.users.fetch(process.env.MY_USER_ID).then(user => user.createDM());
+                    const filter = m => m.content.match(/^(y(|es)|n(|o))$/);
+                    const collector1 = channel.createMessageCollector(filter, {max: 1, time: 15000});
+                    collector1.on('collect', m => {
+                        if(m.content.includes('y')) {
+                            notion.createTask(req.body.event_data.content, req.body.event_data.project_id, req.body.event_data.due.date)
+                                .then(id => todoist.update(req.body.event_data.id, {description: id}))
+                                .then((res) => {
+                                    if(res) {
+                                        message_user('The task has been added to Notion');
+                                    } else {
+                                        message_user('There was a problem adding the task to Notion');
+                                    }
+                                })
+                                .catch((error) => {
+                                    message_user('There was a problem adding the task to Notion');
+                                    message_user(error.message);
+                                })
+                        } else {
+                            message_user('Nevermind')
+                        }
+                    });
 
                     // add task to notion
                     // idea: ask user for data
@@ -85,6 +100,7 @@ app.post('', (req, res) => {
                                 .addField({name: 'Task name', value: req.body.event_data.content, inline: true})
                                 .addField({name: 'Task id', value: `${req.body.event_data.id}`, inline: true});
                             message_embed_user(msg);
+                            message_user(JSON.stringify(req.body.event_data));
                             // this task has to be updated in notion
                             // update task in notion
                         }

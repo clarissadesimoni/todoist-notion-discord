@@ -4,11 +4,40 @@ var notionHelper = (function () {
     require('dotenv').config();
 
     my.api = new require('@notionhq/client').constructor({auth: process.env.NOTION_API_KEY});
+    my.databases = require('./databases.json')
+    my.projects = require('./projects.json')
 
-    my.createTask = async function(name) {
-        const response = await my.api.pages.create({
-            
-        });
+    my.createTask = async function(name, todoist_project_id, do_date) {
+        var tasks_db_id = my.databases.Tasks
+        var req_body = {
+            parent: tasks_db_id,
+            properties: {
+                Name: {
+                    title: [
+                        {
+                            text: {
+                                content: name,
+                            },
+                        },
+                    ],
+                },
+                Project: {
+                    relation: [
+                        {
+                            id: my.projects[todoist_project_id].notion_id
+                        }
+                    ]
+                }
+            }
+        }
+        if(typeof do_date !== 'undefined') {
+            req_body.properties.DoDate = {
+                date: {
+                    start: do_date
+                }
+            }
+        }
+        const response = await my.api.pages.create(req_body);
         return response.id;
     }
 
