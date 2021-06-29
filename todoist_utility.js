@@ -5,44 +5,44 @@ var todoistHelper = (function () {
 
     my.api = require('todoist-rest-api').default(process.env.TODOIST_API_KEY).v1;
 
-	my.find = async function (id) {
-		res = await my.api.find(id);
+	my.findTask = async function (id) {
+		res = await my.api.task.find(id);
 		return res;
 	}
     
 
-	my.findAll = async function () {
-		res = await my.api.findAll();
+	my.findAllTasks = async function () {
+		res = await my.api.task.findAll();
 		return res;
 	}
     
 
-	my.create = async function (task) {
-		res = await my.api.create(task);
+	my.createTask = async function (task) {
+		res = await my.api.task.create(task);
 		return res;
 	}
     
 
-	my.update = async function (id, task) {
-		res = await my.api.update(id, task);
+	my.updateTask = async function (id, task) {
+		res = await my.api.task.update(id, task);
 		return res;
 	}
     
 
-	my.close = async function (id) {
-		res = await my.api.close(id);
+	my.closeTask = async function (id) {
+		res = await my.api.task.close(id);
 		return res;
 	}
     
 
-	my.reopen = async function (id) {
-		res = await my.api.reopen(id);
+	my.reopenTask = async function (id) {
+		res = await my.api.task.reopen(id);
 		return res;
 	}
     
 
-	my.remove = async function (id) {
-		res = await my.api.remove(id);
+	my.removeTask = async function (id) {
+		res = await my.api.task.remove(id);
 		return res;
 	}
     

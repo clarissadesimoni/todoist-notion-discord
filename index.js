@@ -52,7 +52,7 @@ app.post('', (req, res) => {
                     
                     if(req.body.event_data.labels.includes(todoist_label_notion)) {
                         notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due.date)
-                            .then(id => todoist.update(req.body.event_data.id, {description: id}))
+                            .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
                             .then((res) => {
                                 if(res) {
                                     message_user('The task has been added to Notion');
