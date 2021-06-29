@@ -79,7 +79,7 @@ var notionHelper = (function () {
             }
         }
         const response = await my.api.pages.update(req_body);
-        return response.status;
+        return response !== {};
     }
 
     my.completeTask = async function (notion_page_id) {
@@ -91,7 +91,7 @@ var notionHelper = (function () {
                 }
             }
         });
-        return response.status;
+        return response !== {};
     }
 
     my.addProject = async function (name) {
