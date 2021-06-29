@@ -12,6 +12,7 @@ var notionHelper = (function () {
         var tasks_db_id = databases.Tasks
         var req_body = {
             parent: {
+                type: 'databse_id',
                 database_id: tasks_db_id
             },
             properties: {
@@ -98,7 +99,8 @@ var notionHelper = (function () {
         var projects_db_id = databases.Projects
         var req_body = {
             parent: {
-                databse_id: projects_db_id
+                type: 'databse_id',
+                database_id: projects_db_id
             },
             properties: {
                 Name: {
