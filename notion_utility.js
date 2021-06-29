@@ -78,7 +78,7 @@ var notionHelper = (function () {
                 }
             }
         }
-        const response = await my.api.pages.create(req_body);
+        const response = await my.api.pages.update(req_body);
         return response.status;
     }
 
