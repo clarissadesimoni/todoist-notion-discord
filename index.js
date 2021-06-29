@@ -40,6 +40,7 @@ app.post('', (req, res) => {
         var computed_hmac = crypto.createHmac('sha256', process.env.TODOIST_CLIENT_SECRET).update(JSON.stringify(req.body)).digest('base64');
         if(delivered_hmac === computed_hmac) {
             if (req.body.event_name.includes('item')) {
+                JSON.stringify(JSON.stringify(req.body.event_data, null, 4));
                 if(req.body.event_name === 'item:added' && req.body.event_data.description === '') {
                     var msg = new Discord.MessageEmbed()
                         .setTitle('New task added to Todoist')
@@ -100,7 +101,7 @@ app.post('', (req, res) => {
                                 .addField({name: 'Task name', value: req.body.event_data.content, inline: true})
                                 .addField({name: 'Task id', value: `${req.body.event_data.id}`, inline: true});
                             message_embed_user(msg);
-                            message_user(JSON.stringify(req.body.event_data));
+                            message_user(JSON.stringify(req.body.event_data, null, 4));
                             // this task has to be updated in notion
                             // update task in notion
                         }
