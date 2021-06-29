@@ -9,11 +9,10 @@ var notionHelper = (function () {
     const projects = require('./projects.json')
 
     my.createTask = async function(name, todoist_project_id, todoist_task_id, do_date) {
-        var tasks_db_id = databases.Tasks
         var req_body = {
             parent: {
                 type: 'database_id',
-                database_id: tasks_db_id
+                database_id: databases.Tasks
             },
             properties: {
                 Name: {
@@ -28,7 +27,7 @@ var notionHelper = (function () {
                 Project: {
                     relation: [
                         {
-                            id: my.projects[todoist_project_id].notion_id
+                            id: projects[todoist_project_id].notion_id
                         }
                     ]
                 }
@@ -66,7 +65,7 @@ var notionHelper = (function () {
                 Project: {
                     relation: [
                         {
-                            id: my.projects[todoist_project_id].notion_id
+                            id: projects[todoist_project_id].notion_id
                         }
                     ]
                 }
@@ -96,11 +95,10 @@ var notionHelper = (function () {
     }
 
     my.addProject = async function (name) {
-        var projects_db_id = databases.Projects
         var req_body = {
             parent: {
                 type: 'database_id',
-                database_id: projects_db_id
+                database_id: databases.Projects
             },
             properties: {
                 Name: {
