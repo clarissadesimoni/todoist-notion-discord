@@ -69,7 +69,7 @@ app.post('', (req, res) => {
                     if(req.body.event_name === 'item:completed' && req.body.event_data.description !== '') {
                         // this task is completed on todoist but not on notion
                         notion.completeTask(req.body.event_data.description).then(status => {
-                            if(status === 200) {
+                            if(status) {
                                 // later on: create tasklist function
                                 message_user('You can update your tasklist if you want');
                             } else {
