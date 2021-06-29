@@ -5,11 +5,11 @@ var notionHelper = (function () {
 
     const {Client} = require('@notionhq/client');
     my.api = new Client({auth: process.env.NOTION_API_KEY});
-    my.databases = require('./databases.json')
-    my.projects = require('./projects.json')
+    const databases = require('./databases.json')
+    const projects = require('./projects.json')
 
     my.createTask = async function(name, todoist_project_id, todoist_task_id, do_date) {
-        var tasks_db_id = my.databases.Tasks
+        var tasks_db_id = databases.Tasks
         var req_body = {
             parent: {
                 database_id: tasks_db_id
@@ -95,7 +95,7 @@ var notionHelper = (function () {
     }
 
     my.addProject = async function (name) {
-        var projects_db_id = my.databases.Projects
+        var projects_db_id = databases.Projects
         var req_body = {
             parent: {
                 databse_id: projects_db_id
