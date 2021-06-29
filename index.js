@@ -67,6 +67,7 @@ app.post('', (req, res) => {
                                 message_user(error.message);
                             })
                     }
+                } else {
                     if(req.body.event_name === 'item:completed' && req.body.event_data.description !== '') {
                         // this task is completed on todoist but not on notion
                         notion.completeTask(req.body.event_data.description).then(status => {
@@ -77,7 +78,7 @@ app.post('', (req, res) => {
                                 message_user('There was a problem with completing the task on Notion');
                             }
                         })
-                    }else {
+                    } else {
                         if(req.body.event_name === 'item:updated' && req.body.event_data.description !== '') {
                             var msg = new Discord.MessageEmbed()
                                 .setTitle('Task updated in Todoist')
