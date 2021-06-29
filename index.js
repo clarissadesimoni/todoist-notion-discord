@@ -44,8 +44,8 @@ app.post('', (req, res) => {
                 if(req.body.event_name === 'item:added' && req.body.event_data.description === '') {
                     var msg = new Discord.MessageEmbed()
                         .setTitle('New task added to Todoist')
-                        .addField({name: 'Task name', value: req.body.event_data.content, inline: true})
-                        .addField({name: 'Task id', value: `${req.body.event_data.id}`, inline: true});
+                        .addField('Task name', req.body.event_data.content, true)
+                        .addField('Task id', `${req.body.event_data.id}`, true);
                     message_embed_user(msg);
                     // this task is in todoist but not on notion
                     
@@ -88,9 +88,9 @@ app.post('', (req, res) => {
                             } else {
                                 var msg = new Discord.MessageEmbed()
                                     .setTitle('There was a problem with completing a task')
-                                    .addField({name: 'Task name', value: req.body.event_data.content, inline: true})
-                                    .addField({name: 'Todoist task id', value: `${req.body.event_data.id}`, inline: true})
-                                    .addField({name: 'Notion page id', value: `${req.body.event_data.id}`, inline: true});
+                                    .addField('Task name', req.body.event_data.content, true)
+                                    .addField('Todoist task id', `${req.body.event_data.id}`, true)
+                                    .addField('Notion page id', `${req.body.event_data.id}`, true);
                                 message_embed_user(msg);
                             }
                         })
@@ -98,8 +98,8 @@ app.post('', (req, res) => {
                         if(req.body.event_name === 'item:updated' && req.body.event_data.description !== '') {
                             var msg = new Discord.MessageEmbed()
                                 .setTitle('Task updated in Todoist')
-                                .addField({name: 'Task name', value: req.body.event_data.content, inline: true})
-                                .addField({name: 'Task id', value: `${req.body.event_data.id}`, inline: true});
+                                .addField('Task name', req.body.event_data.content, true)
+                                .addField('Task id', `${req.body.event_data.id}`, true);
                             message_embed_user(msg);
                             message_user(JSON.stringify(req.body.event_data, null, 4));
                             // this task has to be updated in notion
@@ -111,8 +111,8 @@ app.post('', (req, res) => {
                 if(req.body.event_name === 'project:added') {
                     var msg = new Discord.MessageEmbed()
                         .setTitle('New project added to Todoist')
-                        .addField({name: 'Project name', value: req.body.event_data.name, inline: true})
-                        .addField({name: 'Project id', value: `${req.body.event_data.id}`, inline: true});
+                        .addField('Project name', req.body.event_data.name, true)
+                        .addField('Project id', `${req.body.event_data.id}`, true);
                     message_embed_user(msg);
                 }
             }
