@@ -84,7 +84,7 @@ app.post('', (req, res) => {
                                 .addField('Task id', `${req.body.event_data.id}`, true);
                             message_embed_user(msg);
                             notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due.date).then(status => {
-                                if(status === 200) {
+                                if(status) {
                                     // later on: create tasklist function
                                     message_user('You can update your tasklist if you want');
                                 } else {
