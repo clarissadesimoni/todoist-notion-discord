@@ -38,10 +38,10 @@ var notionHelper = (function () {
                 number: todoist_task_id
             }
         }
-        if(typeof do_date !== 'undefined') {
+        if(typeof do_date !== 'undefined' && do_date !== null) {
             req_body.properties.DoDate = {
                 date: {
-                    start: do_date
+                    start: do_date.date
                 }
             }
         }
@@ -71,10 +71,10 @@ var notionHelper = (function () {
                 }
             }
         }
-        if(typeof do_date !== 'undefined') {
+        if(typeof do_date !== 'undefined' && do_date !== null) {
             req_body.properties.DoDate = {
                 date: {
-                    start: do_date
+                    start: do_date.date
                 }
             }
         }
