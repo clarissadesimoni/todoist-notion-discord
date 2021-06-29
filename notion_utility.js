@@ -27,7 +27,7 @@ var notionHelper = (function () {
                 Project: {
                     relation: [
                         {
-                            id: projects[todoist_project_id].notion_id
+                            id: projects.todoistKey[todoist_project_id].notion_id
                         }
                     ]
                 }
@@ -65,7 +65,7 @@ var notionHelper = (function () {
                 Project: {
                     relation: [
                         {
-                            id: projects[todoist_project_id].notion_id
+                            id: projects.todoistKey[todoist_project_id].notion_id
                         }
                     ]
                 }
