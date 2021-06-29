@@ -11,7 +11,9 @@ var notionHelper = (function () {
     my.createTask = async function(name, todoist_project_id, todoist_task_id, do_date) {
         var tasks_db_id = my.databases.Tasks
         var req_body = {
-            parent: tasks_db_id,
+            parent: {
+                database_id: tasks_db_id
+            },
             properties: {
                 Name: {
                     title: [
@@ -95,7 +97,9 @@ var notionHelper = (function () {
     my.addProject = async function (name) {
         var projects_db_id = my.databases.Projects
         var req_body = {
-            parent: projects_db_id,
+            parent: {
+                databse_id: projects_db_id
+            },
             properties: {
                 Name: {
                     title: [
