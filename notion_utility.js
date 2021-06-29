@@ -3,8 +3,8 @@ var notionHelper = (function () {
 
     require('dotenv').config();
 
-    const {Notion} = require('@notionhq/client');
-    my.api = new Notion({auth: process.env.NOTION_API_KEY});
+    const {Client} = require('@notionhq/client');
+    my.api = new Client({auth: process.env.NOTION_API_KEY});
     my.databases = require('./databases.json')
     my.projects = require('./projects.json')
 
