@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const discord = new Discord.Client();
 var crypto = require('crypto');
 const notion = require('./notion_utility'); // can call it like notion.funcName(params);
+const todoist = require('./todoist_utility'); // can call it like notion.funcName(params);
 const { message } = require('statuses');
 
 require('dotenv').config();
