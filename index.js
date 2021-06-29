@@ -9,6 +9,8 @@ require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 
+const todoist_label_notion = 2157405300;
+
 app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -40,58 +42,36 @@ app.post('', (req, res) => {
         var computed_hmac = crypto.createHmac('sha256', process.env.TODOIST_CLIENT_SECRET).update(JSON.stringify(req.body)).digest('base64');
         if(delivered_hmac === computed_hmac) {
             if (req.body.event_name.includes('item')) {
-                message_user(JSON.stringify(req.body, null, 4));
                 if(req.body.event_name === 'item:added' && req.body.event_data.description === '') {
                     var msg = new Discord.MessageEmbed()
                         .setTitle('New task added to Todoist')
                         .addField('Task name', req.body.event_data.content, true)
                         .addField('Task id', `${req.body.event_data.id}`, true);
                     message_embed_user(msg);
-                    // this task is in todoist but not on notion
                     
-                    message_user('Do you want to add this task to Notion?');
-                    let channel = discord.users.fetch(process.env.MY_USER_ID).then(user => user.createDM());
-                    const filter = m => m.content.match(/^(y(|es)|n(|o))$/);
-                    const collector1 = channel.createMessageCollector(filter, {max: 1, time: 15000});
-                    collector1.on('collect', m => {
-                        if(m.content.includes('y')) {
-                            notion.createTask(req.body.event_data.content, req.body.event_data.project_id, req.body.event_data.due.date)
-                                .then(id => todoist.update(req.body.event_data.id, {description: id}))
-                                .then((res) => {
-                                    if(res) {
-                                        message_user('The task has been added to Notion');
-                                    } else {
-                                        message_user('There was a problem adding the task to Notion');
-                                    }
-                                })
-                                .catch((error) => {
+                    if(req.body.event_data.labels.includes(todoist_label_notion)) {
+                        notion.createTask(req.body.event_data.content, req.body.event_data.project_id, req.body.event_data.due.date)
+                            .then(id => todoist.update(req.body.event_data.id, {description: id}))
+                            .then((res) => {
+                                if(res) {
+                                    message_user('The task has been added to Notion');
+                                } else {
                                     message_user('There was a problem adding the task to Notion');
-                                    message_user(error.message);
-                                })
-                        } else {
-                            message_user('Nevermind')
-                        }
-                    });
-
-                    // add task to notion
-                    // idea: ask user for data
-
-                    // remeber discord's user.dmChannel.awaitmessages
-                } else {
+                                }
+                            })
+                            .catch((error) => {
+                                message_user('There was a problem adding the task to Notion');
+                                message_user(error.message);
+                            })
+                    }
                     if(req.body.event_name === 'item:completed' && req.body.event_data.description !== '') {
                         // this task is completed on todoist but not on notion
-                        // complete task on notion
                         notion.completeTask(req.body.event_data.description).then(status => {
                             if(status === 200) {
                                 // later on: create tasklist function
                                 message_user('You can update your tasklist if you want');
                             } else {
-                                var msg = new Discord.MessageEmbed()
-                                    .setTitle('There was a problem with completing a task')
-                                    .addField('Task name', req.body.event_data.content, true)
-                                    .addField('Todoist task id', `${req.body.event_data.id}`, true)
-                                    .addField('Notion page id', `${req.body.event_data.id}`, true);
-                                message_embed_user(msg);
+                                message_user('There was a problem with completing the task on Notion');
                             }
                         })
                     }else {
@@ -101,19 +81,28 @@ app.post('', (req, res) => {
                                 .addField('Task name', req.body.event_data.content, true)
                                 .addField('Task id', `${req.body.event_data.id}`, true);
                             message_embed_user(msg);
-                            message_user(JSON.stringify(req.body.event_data, null, 4));
-                            // this task has to be updated in notion
-                            // update task in notion
+                            notion.updateTask(req.body.event_data.description, req.body.event_data.content, req.body.event_data.project_id, req.body.event_data.due.date).then(status => {
+                                if(status === 200) {
+                                    // later on: create tasklist function
+                                    message_user('You can update your tasklist if you want');
+                                } else {
+                                    message_user('There was a problem with updating the task on Notion');
+                                }
+                            });
                         }
                     }
                 }
             } else {
                 if(req.body.event_name === 'project:added') {
-                    var msg = new Discord.MessageEmbed()
-                        .setTitle('New project added to Todoist')
-                        .addField('Project name', req.body.event_data.name, true)
-                        .addField('Project id', `${req.body.event_data.id}`, true);
-                    message_embed_user(msg);
+                    notion.addProject(req.body.event_data.name)
+                        .then((id) => {
+                            var msg = new Discord.MessageEmbed()
+                                .setTitle('New project added to Todoist')
+                                .addField('Project name', req.body.event_data.name, true)
+                                .addField('Todoist project id', `${req.body.event_data.id}`, true)
+                                .addField('Notion project id', `${id}`, true);
+                            message_embed_user(msg);
+                        })
                 }
             }
             // message_user('You can update your tasklist if you want');

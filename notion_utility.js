@@ -7,10 +7,48 @@ var notionHelper = (function () {
     my.databases = require('./databases.json')
     my.projects = require('./projects.json')
 
-    my.createTask = async function(name, todoist_project_id, do_date) {
+    my.createTask = async function(name, todoist_project_id, todoist_task_id, do_date) {
         var tasks_db_id = my.databases.Tasks
         var req_body = {
             parent: tasks_db_id,
+            properties: {
+                Name: {
+                    title: [
+                        {
+                            text: {
+                                content: name,
+                            },
+                        },
+                    ],
+                },
+                Project: {
+                    relation: [
+                        {
+                            id: my.projects[todoist_project_id].notion_id
+                        }
+                    ]
+                }
+            }
+        }
+        if(typeof todoist_task_id !== 'undefined') {
+            req_body.properties.TodoistTaskID = {
+                number: todoist_task_id
+            }
+        }
+        if(typeof do_date !== 'undefined') {
+            req_body.properties.DoDate = {
+                date: {
+                    start: do_date
+                }
+            }
+        }
+        const response = await my.api.pages.create(req_body);
+        return response.id;
+    }
+
+    my.updateTask = async function(notion_page_id, name, todoist_project_id, do_date) {
+        var req_body = {
+            page_id: notion_page_id,
             properties: {
                 Name: {
                     title: [
@@ -38,12 +76,12 @@ var notionHelper = (function () {
             }
         }
         const response = await my.api.pages.create(req_body);
-        return response.id;
+        return response.status;
     }
 
     my.completeTask = async function (notion_page_id) {
         const response = await my.api.pages.update({
-            page_id: notification_page_id,
+            page_id: notion_page_id,
             properties: {
                 Completed: {
                     checkbox: true
@@ -51,6 +89,26 @@ var notionHelper = (function () {
             }
         });
         return response.status;
+    }
+
+    my.addProject = async function (name) {
+        var projects_db_id = my.databases.Projects
+        var req_body = {
+            parent: projects_db_id,
+            properties: {
+                Name: {
+                    title: [
+                        {
+                            text: {
+                                content: name,
+                            },
+                        },
+                    ],
+                }
+            }
+        }
+        const response = await my.api.pages.create(req_body);
+        return response.id;
     }
 
 	my.simplifyPage = function (
