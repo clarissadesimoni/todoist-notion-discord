@@ -43,6 +43,7 @@ app.post('', (req, res) => {
         var computed_hmac = crypto.createHmac('sha256', process.env.TODOIST_CLIENT_SECRET).update(JSON.stringify(req.body)).digest('base64');
         if(delivered_hmac === computed_hmac) {
             if (req.body.event_name.includes('item')) {
+                message_user(req.body.event_name);
                 if(req.body.event_name === 'item:added' && req.body.event_data.description === '') {
                     var msg = new Discord.MessageEmbed()
                         .setTitle('New task added to Todoist')
