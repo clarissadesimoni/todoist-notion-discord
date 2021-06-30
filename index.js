@@ -12,7 +12,6 @@ const todoist = require('./todoist_utility'); // can call it like notion.funcNam
 const PORT = process.env.PORT || 3000;
 
 var app = express().use(express.urlencoded({ extended: true })).use(express.json());
-app.set('todoist_labels', await todoist.findAllLabels());
 
 // process.on('unhandledRejection', error => {
 //     // Will print "unhandledRejection err is not defined"
@@ -34,6 +33,12 @@ function message_user(text) {
 function message_embed_user(msg) {
     discord.users.fetch(process.env.MY_USER_ID).then(user => user.createDM()).then(channel => channel.send(msg));
 }
+
+var todoist_labels = {};
+(async () => {
+    todoist_labels = await todoist.findAllLabels();
+    message_user('Everything is ready');
+})();
 
 discord.on('ready', () => {
     message_user('Hey, The bot is up!');
