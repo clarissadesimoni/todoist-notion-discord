@@ -11,10 +11,7 @@ const todoist = require('./todoist_utility'); // can call it like notion.funcNam
 
 const PORT = process.env.PORT || 3000;
 
-app = express();
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
+var app = express().use(express.urlencoded({ extended: true })).use(express.json());
 app.set('todoist_labels', await todoist.findAllLabels());
 
 // process.on('unhandledRejection', error => {
