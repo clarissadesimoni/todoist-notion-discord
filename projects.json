@@ -113,6 +113,12 @@
             "notion_name": "rent",
             "todoist_id": 2260001153,
             "todoist_name": "rent"
+        },
+        "4ae8550e-887f-4fab-8a47-d3a89e11052e": {
+            "notion_id": "4ae8550e-887f-4fab-8a47-d3a89e11052e",
+            "notion_name": "todoist-notion-discord",
+            "todoist_id": 2268623847,
+            "todoist_name": "todoist-notion-discord"
         }
     },
     "todoistKey": {
@@ -229,6 +235,12 @@
             "notion_name": "rent",
             "todoist_id": 2260001153,
             "todoist_name": "rent"
+        },
+        "2268623847": {
+            "notion_id": "4ae8550e-887f-4fab-8a47-d3a89e11052e",
+            "notion_name": "todoist-notion-discord",
+            "todoist_id": 2268623847,
+            "todoist_name": "todoist-notion-discord"
         }
     }
 }
