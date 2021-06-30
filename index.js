@@ -12,6 +12,7 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 
 const todoist_labels = todoist.findAllLabels();
+while(typeof todoist_labels === 'undefined');
 
 app = express();
 app.use(express.urlencoded({ extended: true }));
