@@ -7,7 +7,7 @@ const todoist = require('./todoist_utility'); // can call it like notion.funcNam
 // const tasklist = require('./tasklist_utility'); // can call it like notion.funcName(params);
 // tasklist.setup();
 
-require('dotenv').config();
+// require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 
