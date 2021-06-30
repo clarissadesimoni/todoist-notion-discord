@@ -4,13 +4,14 @@ const discord = new Discord.Client();
 var crypto = require('crypto');
 const notion = require('./notion_utility'); // can call it like notion.funcName(params);
 const todoist = require('./todoist_utility'); // can call it like notion.funcName(params);
-const { message } = require('statuses');
+var tasklist = require('./tasklist_utility'); // can call it like notion.funcName(params);
+tasklist.setup();
 
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 
-const todoist_label_notion = 2157405300;
+const todoist_labels = todoist.findAllLabels();
 
 app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -58,7 +59,7 @@ app.post('', (req, res) => {
                         .addField('Task id', `${req.body.event_data.id}`, true);
                     message_embed_channel(msg);
                     
-                    if(req.body.event_data.labels.includes(todoist_label_notion)) {
+                    if(req.body.event_data.labels.includes(todoist_labels.strKey.Notion)) {
                         notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due)
                             .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
                             .then((res) => {

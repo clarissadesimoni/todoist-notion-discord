@@ -116,6 +116,21 @@ var notionHelper = (function () {
         return response.id;
     }
 
+    my.getTodaysTask = async function() {
+        var req_body = {
+            database_id: databases.Tasks,
+            filter: {
+                property: 'DoDate',
+                date: {
+                    equals: new Date().toISOString()
+                }
+            }
+        }
+        const response = await notion.databases.query(req_body)
+            .then(res => res.results.map(result => my.simplifyPage(result)));
+        return response;
+    }
+
 	my.simplifyPage = function (
         page,
         attrsToRemove = ['object', 'created_time', 'last_edited_time', 'archived'],

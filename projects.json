@@ -66,50 +66,50 @@
             "todoist_id": 2267901586,
             "todoist_name": "Reti logiche"
         },
-        "22ea4d5938614d47aadbce80a07ec5b9": {
-            "notion_id": "22ea4d5938614d47aadbce80a07ec5b9",
+        "22ea4d59-3861-4d47-aadb-ce80a07ec5b9": {
+            "notion_id": "22ea4d59-3861-4d47-aadb-ce80a07ec5b9",
             "notion_name": "Personal",
             "todoist_id": 2254559523,
             "todoist_name": "Personal"
         },
-        "54cce30d585d48deb59ac68ccc63a715": {
-            "notion_id": "54cce30d585d48deb59ac68ccc63a715",
+        "54cce30d-585d-48de-b59a-c68ccc63a715": {
+            "notion_id": "54cce30d-585d-48de-b59a-c68ccc63a715",
             "notion_name": "Andrea",
             "todoist_id": 2254559568,
             "todoist_name": "Andrea"
         },
-        "89fd18f91d074ca99d8afa2898eebefb": {
-            "notion_id": "89fd18f91d074ca99d8afa2898eebefb",
+        "89fd18f9-1d07-4ca9-9d8a-fa2898eebefb": {
+            "notion_id": "89fd18f9-1d07-4ca9-9d8a-fa2898eebefb",
             "notion_name": "Coding",
             "todoist_id": 2254559609,
             "todoist_name": "Coding"
         },
-        "06064569e2ee44afb7be2de3552ddcf6": {
-            "notion_id": "06064569e2ee44afb7be2de3552ddcf6",
+        "06064569-e2ee-44af-b7be-2de3552ddcf6": {
+            "notion_id": "06064569-e2ee-44af-b7be-2de3552ddcf6",
             "notion_name": "Parents",
             "todoist_id": 2254559646,
             "todoist_name": "Parents"
         },
-        "0e69bb8d91704039a59938bb9e4179e8": {
-            "notion_id": "0e69bb8d91704039a59938bb9e4179e8",
+        "0e69bb8d-9170-4039-a599-38bb9e4179e8": {
+            "notion_id": "0e69bb8d-9170-4039-a599-38bb9e4179e8",
             "notion_name": "Discord",
             "todoist_id": 2254559692,
             "todoist_name": "Discord"
         },
-        "f99d6171443b40b0b37e54ebc98b9cf8": {
-            "notion_id": "f99d6171443b40b0b37e54ebc98b9cf8",
+        "f99d6171-443b-40b0-b37e-54ebc98b9cf8": {
+            "notion_id": "f99d6171-443b-40b0-b37e-54ebc98b9cf8",
             "notion_name": "fscsystem",
             "todoist_id": 2259924464,
             "todoist_name": "fscsystem"
         },
-        "e44415b8504a41dcbbbc02bd67ce8589": {
-            "notion_id": "e44415b8504a41dcbbbc02bd67ce8589",
+        "e44415b8-504a-41dc-bbbc-02bd67ce8589": {
+            "notion_id": "e44415b8-504a-41dc-bbbc-02bd67ce8589",
             "notion_name": "Notion",
             "todoist_id": 2259956035,
             "todoist_name": "Notion"
         },
-        "497bd3cb1ef843c19235674f5b98d3fa": {
-            "notion_id": "497bd3cb1ef843c19235674f5b98d3fa",
+        "497bd3cb-1ef8-43c1-9235-674f5b98d3fa": {
+            "notion_id": "497bd3cb-1ef8-43c1-9235-674f5b98d3fa",
             "notion_name": "rent",
             "todoist_id": 2260001153,
             "todoist_name": "rent"
@@ -189,49 +189,49 @@
             "todoist_name": "Telecomunicazioni"
         },
         "2254559523": {
-            "notion_id": "22ea4d5938614d47aadbce80a07ec5b9",
+            "notion_id": "22ea4d59-3861-4d47-aadb-ce80a07ec5b9",
             "notion_name": "Personal",
             "todoist_id": 2254559523,
             "todoist_name": "Personal"
         },
         "2254559568": {
-            "notion_id": "54cce30d585d48deb59ac68ccc63a715",
+            "notion_id": "54cce30d-585d-48de-b59a-c68ccc63a715",
             "notion_name": "Andrea",
             "todoist_id": 2254559568,
             "todoist_name": "Andrea"
         },
         "2254559609": {
-            "notion_id": "89fd18f91d074ca99d8afa2898eebefb",
+            "notion_id": "89fd18f9-1d07-4ca9-9d8a-fa2898eebefb",
             "notion_name": "Coding",
             "todoist_id": 2254559609,
             "todoist_name": "Coding"
         },
         "2254559646": {
-            "notion_id": "06064569e2ee44afb7be2de3552ddcf6",
+            "notion_id": "06064569-e2ee-44af-b7be-2de3552ddcf6",
             "notion_name": "Parents",
             "todoist_id": 2254559646,
             "todoist_name": "Parents"
         },
         "2254559692": {
-            "notion_id": "0e69bb8d91704039a59938bb9e4179e8",
+            "notion_id": "0e69bb8d-9170-4039-a599-38bb9e4179e8",
             "notion_name": "Discord",
             "todoist_id": 2254559692,
             "todoist_name": "Discord"
         },
         "2259924464": {
-            "notion_id": "f99d6171443b40b0b37e54ebc98b9cf8",
+            "notion_id": "f99d6171-443b-40b0-b37e-54ebc98b9cf8",
             "notion_name": "fscsystem",
             "todoist_id": 2259924464,
             "todoist_name": "fscsystem"
         },
         "2259956035": {
-            "notion_id": "e44415b8504a41dcbbbc02bd67ce8589",
+            "notion_id": "e44415b8-504a-41dc-bbbc-02bd67ce8589",
             "notion_name": "Notion",
             "todoist_id": 2259956035,
             "todoist_name": "Notion"
         },
         "2260001153": {
-            "notion_id": "497bd3cb1ef843c19235674f5b98d3fa",
+            "notion_id": "497bd3cb-1ef8-43c1-9235-674f5b98d3fa",
             "notion_name": "rent",
             "todoist_id": 2260001153,
             "todoist_name": "rent"
