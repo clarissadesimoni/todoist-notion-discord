@@ -11,9 +11,6 @@ require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 
-const todoist_labels = todoist.findAllLabels();
-while(typeof todoist_labels === 'undefined');
-
 app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -38,6 +35,11 @@ function message_user(text) {
 function message_embed_user(msg) {
     discord.users.fetch(process.env.MY_USER_ID).then(user => user.createDM()).then(channel => channel.send(msg));
 }
+
+const todoist_labels = todoist.findAllLabels().then(labels => {
+    message_user('Everything is ready');
+    return labels;
+});
 
 discord.on('ready', () => {
     message_user('Hey, The bot is up!');
