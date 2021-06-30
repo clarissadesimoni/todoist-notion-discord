@@ -21,6 +21,14 @@ app.use(express.json());
 //     console.log('unhandledRejection', error.message);
 // });
 
+function message_channel(text) {
+    discord.channels.fetch(process.env.LOG_CHANNEL_ID).then(channel => channel.send(text));
+}
+
+function message_embed_channel(msg) {
+    discord.channels.fetch(process.env.LOG_CHANNEL_ID).then(channel => channel.send(msg));
+}
+
 function message_user(text) {
     discord.users.fetch(process.env.MY_USER_ID).then(user => user.send(text));
 }
@@ -48,16 +56,17 @@ app.post('', (req, res) => {
                         .setTitle('New task added to Todoist')
                         .addField('Task name', req.body.event_data.content, true)
                         .addField('Task id', `${req.body.event_data.id}`, true);
-                    message_embed_user(msg);
+                    message_embed_channel(msg);
                     
                     if(req.body.event_data.labels.includes(todoist_label_notion)) {
                         notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due)
                             .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
                             .then((res) => {
                                 if(res) {
-                                    message_user('The task has been added to Notion');
+                                    message_channel('The task has been added to Notion');
                                 } else {
                                     message_user('There was a problem adding the task to Notion');
+                                    message_user(error.message);
                                 }
                             })
                             .catch((error) => {
@@ -71,7 +80,12 @@ app.post('', (req, res) => {
                         notion.completeTask(req.body.event_data.description).then(status => {
                             if(status) {
                                 // later on: create tasklist function
-                                message_user('You can update your tasklist if you want');
+                                var msg = new Discord.MessageEmbed()
+                                    .setTitle('Task completed Todoist')
+                                    .addField('Task name', req.body.event_data.content, true)
+                                    .addField('Task id', `${req.body.event_data.id}`, true);
+                                message_embed_channel(msg);
+                                message_channel('You can update your tasklist if you want');
                             } else {
                                 message_user('There was a problem with completing the task on Notion');
                             }
@@ -82,11 +96,11 @@ app.post('', (req, res) => {
                                 .setTitle('Task updated in Todoist')
                                 .addField('Task name', req.body.event_data.content, true)
                                 .addField('Task id', `${req.body.event_data.id}`, true);
-                            message_embed_user(msg);
+                            message_embed_channel(msg);
                             notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due).then(status => {
                                 if(status) {
                                     // later on: create tasklist function
-                                    message_user('You can update your tasklist if you want');
+                                    message_channel('You can update your tasklist if you want');
                                 } else {
                                     message_user('There was a problem with updating the task on Notion');
                                 }
