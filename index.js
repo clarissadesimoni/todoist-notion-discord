@@ -27,7 +27,7 @@ function message_embed_channel(msg) {
 }
 
 function message_user(text) {
-    discord.users.fetch(process.env.MY_USER_ID).then(user => user.createDM()).then(channel => channel.send(msg));
+    discord.users.fetch(process.env.MY_USER_ID).then(user => user.createDM()).then(channel => channel.send(text));
 }
 
 function message_embed_user(msg) {
