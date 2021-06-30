@@ -45,7 +45,7 @@ var tasklistHelper = (function () {
             4: ':mdot_grey'
         }
 		var ls = my.labels.strKey.Started;
-		task.completed = task.checked == 1 || (task.due.is_recurring)
+		task.completed = task.checked == 1
 		if(task.completed) {
 
 		}
