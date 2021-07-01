@@ -15,7 +15,7 @@ var app = express().use(express.urlencoded({ extended: true })).use(express.json
 
 process.on('unhandledRejection', error => {
     // Will print "unhandledRejection err is not defined"
-    console.log('unhandledRejection', error.message);
+    console.log('unhandledRejection', error.reason.message);
 });
 
 function message_channel(text) {
