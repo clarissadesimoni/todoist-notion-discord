@@ -142,7 +142,15 @@ app.post('', (req, res) => {
 })
 
 
-discord.login(process.env.BOT_TOKEN);
+discord.login(process.env.BOT_TOKEN)
+    .then(str => {
+        todoist.findAllLabels()
+        .then(labels => {
+            todoist_labels = labels;
+            message_user('Everything is ready');
+        })
+    });
+
 app.listen(PORT, () => {
 	console.log(`App up at port ${PORT}`);
 });
