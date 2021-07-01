@@ -41,7 +41,7 @@ var notionHelper = (function () {
         if(typeof do_date !== 'undefined' && do_date !== null) {
             req_body.properties.DoDate = {
                 date: {
-                    start: do_date.date
+                    start: do_date.date.replace(/Z$/, '+02:00')
                 }
             }
         }
@@ -74,7 +74,7 @@ var notionHelper = (function () {
         if(typeof do_date !== 'undefined' && do_date !== null) {
             req_body.properties.DoDate = {
                 date: {
-                    start: do_date.date
+                    start: do_date.date.replace(/Z$/, '+02:00')
                 }
             }
         }
