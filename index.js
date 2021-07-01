@@ -19,24 +19,50 @@ process.on('unhandledRejection', error => {
 });
 
 function message_channel(text) {
-    discord.channels.fetch(process.env.LOG_CHANNEL_ID).then(channel => channel.send(text));
+    discord.channels.fetch(process.env.LOG_CHANNEL_ID)
+        .then(channel => channel.send(text))
+        .catch(error => {
+            console.log('Error on message_channel function');
+            console.log(error.message)
+        });
 }
 
 function message_embed_channel(msg) {
-    discord.channels.fetch(process.env.LOG_CHANNEL_ID).then(channel => channel.send(msg));
+    discord.channels.fetch(process.env.LOG_CHANNEL_ID)
+        .then(channel => channel.send(msg))
+        .catch(error => {
+            console.log('Error on message_embed_channel function');
+            console.log(error.message)
+        });
 }
 
 function message_user(text) {
-    discord.users.fetch(process.env.MY_USER_ID).then(user => user.createDM()).then(channel => channel.send(text));
+    discord.users.fetch(process.env.MY_USER_ID)
+        .then(user => user.createDM())
+        .then(channel => channel.send(text))
+        .catch(error => {
+            console.log('Error on message_user function');
+            console.log(error.message)
+        });
 }
 
 function message_embed_user(msg) {
-    discord.users.fetch(process.env.MY_USER_ID).then(user => user.createDM()).then(channel => channel.send(msg));
+    discord.users.fetch(process.env.MY_USER_ID)
+        .then(user => user.createDM())
+        .then(channel => channel.send(msg))
+        .catch(error => {
+            console.log('Error on message_embed_user function');
+            console.log(error.message)
+        });
 }
 
 var todoist_labels = {};
 (async () => {
-    todoist_labels = await todoist.findAllLabels();
+    todoist_labels = await todoist.findAllLabels()
+        .catch(error => {
+            console.log('Error on getting todoist labels');
+            console.log(error.message)
+        });
     message_user('Everything is ready');
 })();
 
@@ -80,19 +106,24 @@ app.post('', (req, res) => {
                 } else {
                     if(req.body.event_name === 'item:completed' && req.body.event_data.description !== '') {
                         // this task is completed on todoist but not on notion
-                        notion.completeTask(req.body.event_data.description).then(status => {
-                            if(status) {
-                                // later on: create tasklist function
-                                var msg = new Discord.MessageEmbed()
-                                    .setTitle('Task completed Todoist')
-                                    .addField('Task name', req.body.event_data.content, true)
-                                    .addField('Task id', `${req.body.event_data.id}`, true);
-                                message_embed_channel(msg);
-                                message_channel('You can update your tasklist if you want');
-                            } else {
-                                message_user('There was a problem with completing the task on Notion');
-                            }
-                        })
+                        notion.completeTask(req.body.event_data.description)
+                            .then(status => {
+                                if(status) {
+                                    // later on: create tasklist function
+                                    var msg = new Discord.MessageEmbed()
+                                        .setTitle('Task completed Todoist')
+                                        .addField('Task name', req.body.event_data.content, true)
+                                        .addField('Task id', `${req.body.event_data.id}`, true);
+                                    message_embed_channel(msg);
+                                    message_channel('You can update your tasklist if you want');
+                                } else {
+                                    message_user('There was a problem with completing the task on Notion');
+                                }
+                            })
+                            .catch((error) => {
+                                message_user('There was a problem completing the task in Notion');
+                                message_user(error.message);
+                            })
                     } else {
                         if(req.body.event_name === 'item:updated' && req.body.event_data.description !== '') {
                             var msg = new Discord.MessageEmbed()
@@ -100,14 +131,19 @@ app.post('', (req, res) => {
                                 .addField('Task name', req.body.event_data.content, true)
                                 .addField('Task id', `${req.body.event_data.id}`, true);
                             message_embed_channel(msg);
-                            notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due).then(status => {
-                                if(status) {
-                                    // later on: create tasklist function
-                                    message_channel('You can update your tasklist if you want');
-                                } else {
-                                    message_user('There was a problem with updating the task on Notion');
-                                }
-                            });
+                            notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due)
+                                .then(status => {
+                                    if(status) {
+                                        // later on: create tasklist function
+                                        message_channel('You can update your tasklist if you want');
+                                    } else {
+                                        message_user('There was a problem with updating the task on Notion');
+                                    }
+                                })
+                                .catch((error) => {
+                                    message_user('There was a problem updating the task in Notion');
+                                    message_user(error.message);
+                                })
                         }
                     }
                 }
