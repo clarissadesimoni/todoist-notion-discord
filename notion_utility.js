@@ -39,9 +39,11 @@ var notionHelper = (function () {
             }
         }
         if(typeof do_date !== 'undefined' && do_date !== null) {
+            start_dt = new Date(do_date.date);
+            start_dt.setHours(start_dt.getHours() + 2);
             req_body.properties.DoDate = {
                 date: {
-                    start: do_date.date.replace(/Z$/, '+02:00')
+                    start: start_dt.replace(/Z$/, '+02:00')
                 }
             }
         }
@@ -72,9 +74,11 @@ var notionHelper = (function () {
             }
         }
         if(typeof do_date !== 'undefined' && do_date !== null) {
+            start_dt = new Date(do_date.date);
+            start_dt.setHours(start_dt.getHours() + 2);
             req_body.properties.DoDate = {
                 date: {
-                    start: do_date.date.replace(/Z$/, '+02:00')
+                    start: start_dt.replace(/Z$/, '+02:00')
                 }
             }
         }
