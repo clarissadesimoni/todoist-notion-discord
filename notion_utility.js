@@ -43,7 +43,7 @@ var notionHelper = (function () {
             start_dt.setHours(start_dt.getHours() + 2);
             req_body.properties.DoDate = {
                 date: {
-                    start: start_dt.replace(/Z$/, '+02:00')
+                    start: start_dt.toISOString().replace(/Z$/, '+02:00')
                 }
             }
         }
@@ -78,7 +78,7 @@ var notionHelper = (function () {
             start_dt.setHours(start_dt.getHours() + 2);
             req_body.properties.DoDate = {
                 date: {
-                    start: start_dt.replace(/Z$/, '+02:00')
+                    start: start_dt.toISOString().replace(/Z$/, '+02:00')
                 }
             }
         }
