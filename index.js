@@ -78,7 +78,7 @@ app.post('', (req, res) => {
     if(req.get('User-Agent') === 'Todoist-Webhooks') {
         var delivered_hmac = req.get('X-Todoist-Hmac-SHA256');
         var computed_hmac = crypto.createHmac('sha256', process.env.TODOIST_CLIENT_SECRET).update(JSON.stringify(req.body)).digest('base64');
-        if(delivered_hmac === computed_hmac) {
+        // if(delivered_hmac === computed_hmac) {
             if (req.body.event_name.includes('item')) {
                 if(req.body.event_name === 'item:added' && req.body.event_data.description === '') {
                     var msg = new Discord.MessageEmbed()
@@ -162,12 +162,12 @@ app.post('', (req, res) => {
             }
             // message_user('You can update your tasklist if you want');
             res.status(200).send('Event handled');
-        } else {
-            message_user('A 403 (Unauthorized) status code has been sent to a request');
-            res.status(403).send('Unauthorized');
-            console.log(`delivered_hmac: ${delivered_hmac}\ncomputed_hmac: ${computed_hmac}\n`)
-            console.log(req.body);
-        }
+        // } else {
+        //     message_user('A 403 (Unauthorized) status code has been sent to a request');
+        //     res.status(403).send('Unauthorized');
+        //     console.log(`delivered_hmac: ${delivered_hmac}\ncomputed_hmac: ${computed_hmac}\n`)
+        //     console.log(req.body);
+        // }
     } else {
         message_user('A 400 (Bad request) status code has been sent to a request');
         res.status(400).send('Bad request');
