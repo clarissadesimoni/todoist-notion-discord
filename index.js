@@ -88,7 +88,7 @@ app.post('', (req, res) => {
                     message_embed_channel(msg);
                     
                     if(req.body.event_data.labels.includes(todoist_labels.strKey.Notion)) {
-                        notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due)
+                        notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority)
                             .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
                             .then((res) => {
                                 if(res) {
@@ -131,7 +131,7 @@ app.post('', (req, res) => {
                                 .addField('Task name', req.body.event_data.content, true)
                                 .addField('Task id', `${req.body.event_data.id}`, true);
                             message_embed_channel(msg);
-                            notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due)
+                            notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due, 5 - req.body.event_data.priority)
                                 .then(status => {
                                     if(status) {
                                         // later on: create tasklist function

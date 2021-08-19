@@ -8,7 +8,7 @@ var notionHelper = (function () {
     const databases = require('./databases.json')
     const projects = require('./projects.json')
 
-    my.createTask = async function(name, todoist_project_id, todoist_task_id, do_date) {
+    my.createTask = async function(name, todoist_project_id, todoist_task_id, do_date, priority) {
         var req_body = {
             parent: {
                 type: 'database_id',
@@ -30,6 +30,9 @@ var notionHelper = (function () {
                             id: projects.todoistKey[todoist_project_id].notion_id
                         }
                     ]
+                },
+                Priority: {
+                    number: priority
                 }
             }
         }
@@ -51,7 +54,7 @@ var notionHelper = (function () {
         return response.id;
     }
 
-    my.updateTask = async function(notion_page_id, name, todoist_project_id, do_date) {
+    my.updateTask = async function(notion_page_id, name, todoist_project_id, do_date, priority) {
         var req_body = {
             page_id: notion_page_id,
             properties: {
@@ -70,6 +73,9 @@ var notionHelper = (function () {
                             id: projects.todoistKey[todoist_project_id].notion_id
                         }
                     ]
+                },
+                Priority: {
+                    number: priority
                 }
             }
         }
