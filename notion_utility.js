@@ -8,7 +8,7 @@ var notionHelper = (function () {
     const databases = require('./databases.json')
     const projects = require('./projects.json')
 
-    my.createTask = async function(name, todoist_project_id, todoist_task_id, do_date, priority) {
+    my.createTask = async function(name, todoist_project_id, todoist_task_id, do_date, priority, in_discord) {
         var req_body = {
             parent: {
                 type: 'database_id',
@@ -33,6 +33,9 @@ var notionHelper = (function () {
                 },
                 Priority: {
                     number: priority
+                },
+                isOnDiscord: {
+                    checkbox: in_discord
                 }
             }
         }
@@ -54,7 +57,7 @@ var notionHelper = (function () {
         return response.id;
     }
 
-    my.updateTask = async function(notion_page_id, name, todoist_project_id, do_date, priority) {
+    my.updateTask = async function(notion_page_id, name, todoist_project_id, do_date, priority, in_discord) {
         var req_body = {
             page_id: notion_page_id,
             properties: {
@@ -76,6 +79,9 @@ var notionHelper = (function () {
                 },
                 Priority: {
                     number: priority
+                },
+                isOnDiscord: {
+                    checkbox: in_discord
                 }
             }
         }
