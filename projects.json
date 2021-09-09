@@ -119,6 +119,18 @@
             "notion_name": "todoist-notion-discord",
             "todoist_id": 2268623847,
             "todoist_name": "todoist-notion-discord"
+        },
+        "ead028c2-9ecd-42f3-b2b0-5e63db2a0aa0": {
+            "notion_id": "ead028c2-9ecd-42f3-b2b0-5e63db2a0aa0",
+            "notion_name": "coffee-maker",
+            "todoist_id": 2273403387,
+            "todoist_name": "coffee-maker"
+        },
+        "c24696b1-f8c6-4948-a215-f20644572a57": {
+            "notion_id": "c24696b1-f8c6-4948-a215-f20644572a57",
+            "notion_name": "coffeewhilecoding",
+            "todoist_id": 2273403455,
+            "todoist_name": "coffeewhilecoding"
         }
     },
     "todoistKey": {
@@ -241,6 +253,18 @@
             "notion_name": "todoist-notion-discord",
             "todoist_id": 2268623847,
             "todoist_name": "todoist-notion-discord"
+        },
+        "2273403387": {
+            "notion_id": "ead028c2-9ecd-42f3-b2b0-5e63db2a0aa0",
+            "notion_name": "coffee-maker",
+            "todoist_id": 2273403387,
+            "todoist_name": "coffee-maker"
+        },
+        "2273403455": {
+            "notion_id": "c24696b1-f8c6-4948-a215-f20644572a57",
+            "notion_name": "coffeewhilecoding",
+            "todoist_id": 2273403455,
+            "todoist_name": "coffeewhilecoding"
         }
     }
 }
