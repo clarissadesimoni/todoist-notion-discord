@@ -108,6 +108,12 @@
             "todoist_id": 2259956035,
             "todoist_name": "Notion"
         },
+        "cbc043de-736e-4e13-92f7-c3d3194d28a2": {
+            "notion_id": "cbc043de-736e-4e13-92f7-c3d3194d28a2",
+            "notion_name": "University",
+            "todoist_id": 2254670804,
+            "todoist_name": "University"
+        },
         "497bd3cb-1ef8-43c1-9235-674f5b98d3fa": {
             "notion_id": "497bd3cb-1ef8-43c1-9235-674f5b98d3fa",
             "notion_name": "rent",
@@ -241,6 +247,12 @@
             "notion_name": "Notion",
             "todoist_id": 2259956035,
             "todoist_name": "Notion"
+        },
+        "2254670804": {
+            "notion_id": "cbc043de-736e-4e13-92f7-c3d3194d28a2",
+            "notion_name": "University",
+            "todoist_id": 2254670804,
+            "todoist_name": "University"
         },
         "2260001153": {
             "notion_id": "497bd3cb-1ef8-43c1-9235-674f5b98d3fa",
