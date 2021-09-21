@@ -8,6 +8,14 @@ var notionHelper = (function () {
     const databases = require('./databases.json')
     const projects = require('./projects.json')
 
+    my.groupBy = function(key) {
+        result = projects.reduce(function (r, a) {
+            r[a[key]] = r[a[key]] || [];
+            r[a[key]].push(a);
+            return r;
+        }, Object.create(null));
+    }
+
     my.createTask = async function(name, todoist_project_id, todoist_task_id, do_date, priority, in_discord) {
         var req_body = {
             parent: {
@@ -27,7 +35,7 @@ var notionHelper = (function () {
                 Project: {
                     relation: [
                         {
-                            id: projects.todoistKey[todoist_project_id].notion_id
+                            id: my.groupBy(todoist_id)[todoist_project_id].notion_id
                         }
                     ]
                 },
@@ -73,7 +81,7 @@ var notionHelper = (function () {
                 Project: {
                     relation: [
                         {
-                            id: projects.todoistKey[todoist_project_id].notion_id
+                            id: my.groupBy(todoist_id)[todoist_project_id].notion_id
                         }
                     ]
                 },

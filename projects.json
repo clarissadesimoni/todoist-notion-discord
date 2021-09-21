@@ -1,282 +1,151 @@
-{
-    "notionKey": {
-        "5ad4f1dc-3d75-4c31-b04d-7324d0635355": {
-            "notion_id": "5ad4f1dc-3d75-4c31-b04d-7324d0635355",
-            "notion_name": "Tecnologie web",
-            "todoist_id": 2267901579,
-            "todoist_name": "Tecnologie web"
-        },
-        "727f2cbb-bb52-4e39-9b5c-1f30ff4268df": {
-            "notion_id": "727f2cbb-bb52-4e39-9b5c-1f30ff4268df",
-            "notion_name": "Laboratorio di amministrazione di sistemi",
-            "todoist_id": 2267901582,
-            "todoist_name": "Laboratorio di amministrazione di sistemi"
-        },
-        "ac5bd8e6-9372-4f87-b814-732b74f20c7b": {
-            "notion_id": "ac5bd8e6-9372-4f87-b814-732b74f20c7b",
-            "notion_name": "Ingegneria del software",
-            "todoist_id": 2267901583,
-            "todoist_name": "Ingegneria del software"
-        },
-        "4066bf6b-9758-4490-bacc-665ccf9a0cba": {
-            "notion_id": "4066bf6b-9758-4490-bacc-665ccf9a0cba",
-            "notion_name": "Laboratorio di sicurezza informatica",
-            "todoist_id": 2267901581,
-            "todoist_name": "Laboratorio di sicurezza informatica"
-        },
-        "955c162d-e9d8-43eb-88a5-47fc1f58ac15": {
-            "notion_id": "955c162d-e9d8-43eb-88a5-47fc1f58ac15",
-            "notion_name": "Reti di calcolatori",
-            "todoist_id": 2267901587,
-            "todoist_name": "Reti di calcolatori"
-        },
-        "93700be6-8d7b-41c5-9a70-41b6c88b095f": {
-            "notion_id": "93700be6-8d7b-41c5-9a70-41b6c88b095f",
-            "notion_name": "Progettazione di applicazioni web",
-            "todoist_id": 2267901585,
-            "todoist_name": "Progettazione di applicazioni web"
-        },
-        "b8808cde-9617-4b94-b7a6-eafa0e7c58b0": {
-            "notion_id": "b8808cde-9617-4b94-b7a6-eafa0e7c58b0",
-            "notion_name": "Elettronica",
-            "todoist_id": 2267901588,
-            "todoist_name": "Elettronica"
-        },
-        "012508aa-73ea-4605-9765-250c89bdb8c7": {
-            "notion_id": "012508aa-73ea-4605-9765-250c89bdb8c7",
-            "notion_name": "Controlli automatici",
-            "todoist_id": 2267901590,
-            "todoist_name": "Controlli automatici"
-        },
-        "6bd8e14e-3dd3-4b1e-a664-11a55af54e7b": {
-            "notion_id": "6bd8e14e-3dd3-4b1e-a664-11a55af54e7b",
-            "notion_name": "Elettrotecnica",
-            "todoist_id": 2267901591,
-            "todoist_name": "Elettrotecnica"
-        },
-        "e87932c0-8616-4276-b33b-e222e6bd2f84": {
-            "notion_id": "e87932c0-8616-4276-b33b-e222e6bd2f84",
-            "notion_name": "Telecomunicazioni",
-            "todoist_id": 2267901592,
-            "todoist_name": "Telecomunicazioni"
-        },
-        "0f1a3606-1d28-48d6-8f43-cbb2b27400d1": {
-            "notion_id": "0f1a3606-1d28-48d6-8f43-cbb2b27400d1",
-            "notion_name": "Reti logiche",
-            "todoist_id": 2267901586,
-            "todoist_name": "Reti logiche"
-        },
-        "22ea4d59-3861-4d47-aadb-ce80a07ec5b9": {
-            "notion_id": "22ea4d59-3861-4d47-aadb-ce80a07ec5b9",
-            "notion_name": "Personal",
-            "todoist_id": 2254559523,
-            "todoist_name": "Personal"
-        },
-        "54cce30d-585d-48de-b59a-c68ccc63a715": {
-            "notion_id": "54cce30d-585d-48de-b59a-c68ccc63a715",
-            "notion_name": "Andrea",
-            "todoist_id": 2254559568,
-            "todoist_name": "Andrea"
-        },
-        "89fd18f9-1d07-4ca9-9d8a-fa2898eebefb": {
-            "notion_id": "89fd18f9-1d07-4ca9-9d8a-fa2898eebefb",
-            "notion_name": "Coding",
-            "todoist_id": 2254559609,
-            "todoist_name": "Coding"
-        },
-        "06064569-e2ee-44af-b7be-2de3552ddcf6": {
-            "notion_id": "06064569-e2ee-44af-b7be-2de3552ddcf6",
-            "notion_name": "Parents",
-            "todoist_id": 2254559646,
-            "todoist_name": "Parents"
-        },
-        "0e69bb8d-9170-4039-a599-38bb9e4179e8": {
-            "notion_id": "0e69bb8d-9170-4039-a599-38bb9e4179e8",
-            "notion_name": "Discord",
-            "todoist_id": 2254559692,
-            "todoist_name": "Discord"
-        },
-        "f99d6171-443b-40b0-b37e-54ebc98b9cf8": {
-            "notion_id": "f99d6171-443b-40b0-b37e-54ebc98b9cf8",
-            "notion_name": "fscsystem",
-            "todoist_id": 2259924464,
-            "todoist_name": "fscsystem"
-        },
-        "e44415b8-504a-41dc-bbbc-02bd67ce8589": {
-            "notion_id": "e44415b8-504a-41dc-bbbc-02bd67ce8589",
-            "notion_name": "Notion",
-            "todoist_id": 2259956035,
-            "todoist_name": "Notion"
-        },
-        "cbc043de-736e-4e13-92f7-c3d3194d28a2": {
-            "notion_id": "cbc043de-736e-4e13-92f7-c3d3194d28a2",
-            "notion_name": "University",
-            "todoist_id": 2254670804,
-            "todoist_name": "University"
-        },
-        "497bd3cb-1ef8-43c1-9235-674f5b98d3fa": {
-            "notion_id": "497bd3cb-1ef8-43c1-9235-674f5b98d3fa",
-            "notion_name": "rent",
-            "todoist_id": 2260001153,
-            "todoist_name": "rent"
-        },
-        "4ae8550e-887f-4fab-8a47-d3a89e11052e": {
-            "notion_id": "4ae8550e-887f-4fab-8a47-d3a89e11052e",
-            "notion_name": "todoist-notion-discord",
-            "todoist_id": 2268623847,
-            "todoist_name": "todoist-notion-discord"
-        },
-        "ead028c2-9ecd-42f3-b2b0-5e63db2a0aa0": {
-            "notion_id": "ead028c2-9ecd-42f3-b2b0-5e63db2a0aa0",
-            "notion_name": "coffee-maker",
-            "todoist_id": 2273403387,
-            "todoist_name": "coffee-maker"
-        },
-        "c24696b1-f8c6-4948-a215-f20644572a57": {
-            "notion_id": "c24696b1-f8c6-4948-a215-f20644572a57",
-            "notion_name": "coffeewhilecoding",
-            "todoist_id": 2273403455,
-            "todoist_name": "coffeewhilecoding"
-        }
+[
+    {
+        "notion_id": "5ad4f1dc-3d75-4c31-b04d-7324d0635355",
+        "notion_name": "Tecnologie web",
+        "todoist_id": 2267901579,
+        "todoist_name": "Tecnologie web",
+        "course_code": "TWT"
     },
-    "todoistKey": {
-        "2267901579": {
-            "notion_id": "5ad4f1dc-3d75-4c31-b04d-7324d0635355",
-            "notion_name": "Tecnologie web",
-            "todoist_id": 2267901579,
-            "todoist_name": "Tecnologie web"
-        },
-        "2267901581": {
-            "notion_id": "4066bf6b-9758-4490-bacc-665ccf9a0cba",
-            "notion_name": "Laboratorio di sicurezza informatica",
-            "todoist_id": 2267901581,
-            "todoist_name": "Laboratorio di sicurezza informatica"
-        },
-        "2267901582": {
-            "notion_id": "727f2cbb-bb52-4e39-9b5c-1f30ff4268df",
-            "notion_name": "Laboratorio di amministrazione di sistemi",
-            "todoist_id": 2267901582,
-            "todoist_name": "Laboratorio di amministrazione di sistemi"
-        },
-        "2267901583": {
-            "notion_id": "ac5bd8e6-9372-4f87-b814-732b74f20c7b",
-            "notion_name": "Ingegneria del software",
-            "todoist_id": 2267901583,
-            "todoist_name": "Ingegneria del software"
-        },
-        "2267901585": {
-            "notion_id": "93700be6-8d7b-41c5-9a70-41b6c88b095f",
-            "notion_name": "Progettazione di applicazioni web",
-            "todoist_id": 2267901585,
-            "todoist_name": "Progettazione di applicazioni web"
-        },
-        "2267901586": {
-            "notion_id": "0f1a3606-1d28-48d6-8f43-cbb2b27400d1",
-            "notion_name": "Reti logiche",
-            "todoist_id": 2267901586,
-            "todoist_name": "Reti logiche"
-        },
-        "2267901587": {
-            "notion_id": "955c162d-e9d8-43eb-88a5-47fc1f58ac15",
-            "notion_name": "Reti di calcolatori",
-            "todoist_id": 2267901587,
-            "todoist_name": "Reti di calcolatori"
-        },
-        "2267901588": {
-            "notion_id": "b8808cde-9617-4b94-b7a6-eafa0e7c58b0",
-            "notion_name": "Elettronica",
-            "todoist_id": 2267901588,
-            "todoist_name": "Elettronica"
-        },
-        "2267901590": {
-            "notion_id": "012508aa-73ea-4605-9765-250c89bdb8c7",
-            "notion_name": "Controlli automatici",
-            "todoist_id": 2267901590,
-            "todoist_name": "Controlli automatici"
-        },
-        "2267901591": {
-            "notion_id": "6bd8e14e-3dd3-4b1e-a664-11a55af54e7b",
-            "notion_name": "Elettrotecnica",
-            "todoist_id": 2267901591,
-            "todoist_name": "Elettrotecnica"
-        },
-        "2267901592": {
-            "notion_id": "e87932c0-8616-4276-b33b-e222e6bd2f84",
-            "notion_name": "Telecomunicazioni",
-            "todoist_id": 2267901592,
-            "todoist_name": "Telecomunicazioni"
-        },
-        "2254559523": {
-            "notion_id": "22ea4d59-3861-4d47-aadb-ce80a07ec5b9",
-            "notion_name": "Personal",
-            "todoist_id": 2254559523,
-            "todoist_name": "Personal"
-        },
-        "2254559568": {
-            "notion_id": "54cce30d-585d-48de-b59a-c68ccc63a715",
-            "notion_name": "Andrea",
-            "todoist_id": 2254559568,
-            "todoist_name": "Andrea"
-        },
-        "2254559609": {
-            "notion_id": "89fd18f9-1d07-4ca9-9d8a-fa2898eebefb",
-            "notion_name": "Coding",
-            "todoist_id": 2254559609,
-            "todoist_name": "Coding"
-        },
-        "2254559646": {
-            "notion_id": "06064569-e2ee-44af-b7be-2de3552ddcf6",
-            "notion_name": "Parents",
-            "todoist_id": 2254559646,
-            "todoist_name": "Parents"
-        },
-        "2254559692": {
-            "notion_id": "0e69bb8d-9170-4039-a599-38bb9e4179e8",
-            "notion_name": "Discord",
-            "todoist_id": 2254559692,
-            "todoist_name": "Discord"
-        },
-        "2259924464": {
-            "notion_id": "f99d6171-443b-40b0-b37e-54ebc98b9cf8",
-            "notion_name": "fscsystem",
-            "todoist_id": 2259924464,
-            "todoist_name": "fscsystem"
-        },
-        "2259956035": {
-            "notion_id": "e44415b8-504a-41dc-bbbc-02bd67ce8589",
-            "notion_name": "Notion",
-            "todoist_id": 2259956035,
-            "todoist_name": "Notion"
-        },
-        "2254670804": {
-            "notion_id": "cbc043de-736e-4e13-92f7-c3d3194d28a2",
-            "notion_name": "University",
-            "todoist_id": 2254670804,
-            "todoist_name": "University"
-        },
-        "2260001153": {
-            "notion_id": "497bd3cb-1ef8-43c1-9235-674f5b98d3fa",
-            "notion_name": "rent",
-            "todoist_id": 2260001153,
-            "todoist_name": "rent"
-        },
-        "2268623847": {
-            "notion_id": "4ae8550e-887f-4fab-8a47-d3a89e11052e",
-            "notion_name": "todoist-notion-discord",
-            "todoist_id": 2268623847,
-            "todoist_name": "todoist-notion-discord"
-        },
-        "2273403387": {
-            "notion_id": "ead028c2-9ecd-42f3-b2b0-5e63db2a0aa0",
-            "notion_name": "coffee-maker",
-            "todoist_id": 2273403387,
-            "todoist_name": "coffee-maker"
-        },
-        "2273403455": {
-            "notion_id": "c24696b1-f8c6-4948-a215-f20644572a57",
-            "notion_name": "coffeewhilecoding",
-            "todoist_id": 2273403455,
-            "todoist_name": "coffeewhilecoding"
-        }
+    {
+        "notion_id": "727f2cbb-bb52-4e39-9b5c-1f30ff4268df",
+        "notion_name": "Laboratorio di amministrazione di sistemi",
+        "todoist_id": 2267901582,
+        "todoist_name": "Laboratorio di amministrazione di sistemi",
+        "course_code": "LAS"
+    },
+    {
+        "notion_id": "ac5bd8e6-9372-4f87-b814-732b74f20c7b",
+        "notion_name": "Ingegneria del software",
+        "todoist_id": 2267901583,
+        "todoist_name": "Ingegneria del software",
+        "course_code": "SWE"
+    },
+    {
+        "notion_id": "4066bf6b-9758-4490-bacc-665ccf9a0cba",
+        "notion_name": "Laboratorio di sicurezza informatica",
+        "todoist_id": 2267901581,
+        "todoist_name": "Laboratorio di sicurezza informatica",
+        "course_code": "SEC"
+    },
+    {
+        "notion_id": "955c162d-e9d8-43eb-88a5-47fc1f58ac15",
+        "notion_name": "Reti di calcolatori",
+        "todoist_id": 2267901587,
+        "todoist_name": "Reti di calcolatori",
+        "course_code": "RDC"
+    },
+    {
+        "notion_id": "93700be6-8d7b-41c5-9a70-41b6c88b095f",
+        "notion_name": "Progettazione di applicazioni web",
+        "todoist_id": 2267901585,
+        "todoist_name": "Progettazione di applicazioni web",
+        "course_code": "PAW"
+    },
+    {
+        "notion_id": "b8808cde-9617-4b94-b7a6-eafa0e7c58b0",
+        "notion_name": "Elettronica",
+        "todoist_id": 2267901588,
+        "todoist_name": "Elettronica",
+        "course_code": "ELE"
+    },
+    {
+        "notion_id": "012508aa-73ea-4605-9765-250c89bdb8c7",
+        "notion_name": "Controlli automatici",
+        "todoist_id": 2267901590,
+        "todoist_name": "Controlli automatici",
+        "course_code": "CAT"
+    },
+    {
+        "notion_id": "6bd8e14e-3dd3-4b1e-a664-11a55af54e7b",
+        "notion_name": "Elettrotecnica",
+        "todoist_id": 2267901591,
+        "todoist_name": "Elettrotecnica",
+        "course_code": "ETC"
+    },
+    {
+        "notion_id": "e87932c0-8616-4276-b33b-e222e6bd2f84",
+        "notion_name": "Telecomunicazioni",
+        "todoist_id": 2267901592,
+        "todoist_name": "Telecomunicazioni",
+        "course_code": "TLC"
+    },
+    {
+        "notion_id": "0f1a3606-1d28-48d6-8f43-cbb2b27400d1",
+        "notion_name": "Reti logiche",
+        "todoist_id": 2267901586,
+        "todoist_name": "Reti logiche",
+        "course_code": "RLT"
+    },
+    {
+        "notion_id": "22ea4d59-3861-4d47-aadb-ce80a07ec5b9",
+        "notion_name": "Personal",
+        "todoist_id": 2254559523,
+        "todoist_name": "Personal"
+    },
+    {
+        "notion_id": "54cce30d-585d-48de-b59a-c68ccc63a715",
+        "notion_name": "Andrea",
+        "todoist_id": 2254559568,
+        "todoist_name": "Andrea"
+    },
+    {
+        "notion_id": "89fd18f9-1d07-4ca9-9d8a-fa2898eebefb",
+        "notion_name": "Coding",
+        "todoist_id": 2254559609,
+        "todoist_name": "Coding"
+    },
+    {
+        "notion_id": "06064569-e2ee-44af-b7be-2de3552ddcf6",
+        "notion_name": "Parents",
+        "todoist_id": 2254559646,
+        "todoist_name": "Parents"
+    },
+    {
+        "notion_id": "0e69bb8d-9170-4039-a599-38bb9e4179e8",
+        "notion_name": "Discord",
+        "todoist_id": 2254559692,
+        "todoist_name": "Discord"
+    },
+    {
+        "notion_id": "f99d6171-443b-40b0-b37e-54ebc98b9cf8",
+        "notion_name": "fscsystem",
+        "todoist_id": 2259924464,
+        "todoist_name": "fscsystem"
+    },
+    {
+        "notion_id": "e44415b8-504a-41dc-bbbc-02bd67ce8589",
+        "notion_name": "Notion",
+        "todoist_id": 2259956035,
+        "todoist_name": "Notion"
+    },
+    {
+        "notion_id": "cbc043de-736e-4e13-92f7-c3d3194d28a2",
+        "notion_name": "University",
+        "todoist_id": 2254670804,
+        "todoist_name": "University"
+    },
+    {
+        "notion_id": "497bd3cb-1ef8-43c1-9235-674f5b98d3fa",
+        "notion_name": "rent",
+        "todoist_id": 2260001153,
+        "todoist_name": "rent"
+    },
+    {
+        "notion_id": "4ae8550e-887f-4fab-8a47-d3a89e11052e",
+        "notion_name": "todoist-notion-discord",
+        "todoist_id": 2268623847,
+        "todoist_name": "todoist-notion-discord"
+    },
+    {
+        "notion_id": "ead028c2-9ecd-42f3-b2b0-5e63db2a0aa0",
+        "notion_name": "coffee-maker",
+        "todoist_id": 2273403387,
+        "todoist_name": "coffee-maker"
+    },
+    {
+        "notion_id": "c24696b1-f8c6-4948-a215-f20644572a57",
+        "notion_name": "coffeewhilecoding",
+        "todoist_id": 2273403455,
+        "todoist_name": "coffeewhilecoding"
     }
-}
+]
