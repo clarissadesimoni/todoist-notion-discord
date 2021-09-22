@@ -52,18 +52,21 @@ var todoistHelper = (function () {
 	}
 
 	my.findAllLabels = async function () {
-		var res = {
-			strKey: {},
-			intKey: {}
-		};
+		var res = [];
 		await my.api.label.findAll().then(function (labels) {
-			labels.forEach(function (label) {
-				res.strKey[label.name] = label.id;
-				res.intKey[label.id] = label.name;
-			})
+			labels.forEach(res.push({name: label.name, id: label.id}))
 		})
 		return res;
 	}
+
+	my.getLabel = function(key, target) {
+        result = projects.reduce(function (r, a) {
+            r[a[key]] = r[a[key]] || [];
+            r[a[key]].push(a);
+            return r;
+        }, Object.create(null));
+		return object[target];
+    }
 
 	my.findSection = async function (id) {
 		var res = await my.api.section.find(id);

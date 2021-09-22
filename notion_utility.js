@@ -8,12 +8,13 @@ var notionHelper = (function () {
     const databases = require('./databases.json')
     const projects = require('./projects.json')
 
-    my.groupBy = function(key) {
+    my.getProject = function(key, target) {
         result = projects.reduce(function (r, a) {
             r[a[key]] = r[a[key]] || [];
             r[a[key]].push(a);
             return r;
         }, Object.create(null));
+        return result[target];
     }
 
     my.createTask = async function(name, todoist_project_id, todoist_task_id, do_date, priority, in_discord) {
@@ -35,7 +36,7 @@ var notionHelper = (function () {
                 Project: {
                     relation: [
                         {
-                            id: my.groupBy(todoist_id)[todoist_project_id].notion_id
+                            id: my.groupBy("todoist_id")[todoist_project_id].notion_id
                         }
                     ]
                 },
@@ -81,7 +82,7 @@ var notionHelper = (function () {
                 Project: {
                     relation: [
                         {
-                            id: my.groupBy(todoist_id)[todoist_project_id].notion_id
+                            id: my.groupBy("todoist_id")[todoist_project_id].notion_id
                         }
                     ]
                 },
@@ -153,6 +154,51 @@ var notionHelper = (function () {
         const response = await notion.databases.query(req_body)
             .then(res => res.results.map(result => my.simplifyPage(result)));
         return response;
+    }
+
+    my.createLecture = async function(name, mode) {
+        start_date = new Date();
+        var req_body = {
+            parent: {
+                type: 'database_id',
+                database_id: databases.Lectures
+            },
+            properties: {
+                "Lecture number and topic": {
+                    title: [
+                        {
+                            text: {
+                                content: `${name.slice(4)} - `,
+                            },
+                        },
+                    ],
+                },
+                Course: {
+                    relation: [
+                        {
+                            id: my.groupBy("course_code")[name.slice(0, 3)].notion_id
+                        }
+                    ]
+                },
+                "Date of lecture": {
+                    date: {
+                        start: start_date.toISOString().split('T')[0]
+                    }
+                },
+                "Class mode": {
+                    select: {
+                        name: mode
+                    }
+                },
+                "Class type": {
+                    select: {
+                        name: name[4] === 'L' ? 'Lecture' : 'Practical'
+                    }
+                }
+            }
+        }
+        const response = await my.api.pages.create(req_body);
+        return response.id;
     }
 
 	my.simplifyPage = function (

@@ -77,8 +77,8 @@ app.get('', (req, res) => {
 
 app.post('', (req, res) => {
     if(req.get('User-Agent') === 'Todoist-Webhooks') {
-        var delivered_hmac = req.get('X-Todoist-Hmac-SHA256');
-        var computed_hmac = crypto.createHmac('sha256', process.env.TODOIST_CLIENT_SECRET).update(JSON.stringify(req.body)).digest('base64');
+        // var delivered_hmac = req.get('X-Todoist-Hmac-SHA256');
+        // var computed_hmac = crypto.createHmac('sha256', process.env.TODOIST_CLIENT_SECRET).update(JSON.stringify(req.body)).digest('base64');
         // if(delivered_hmac === computed_hmac) {
             if (req.body.event_name.includes('item')) {
                 if(req.body.event_name === 'item:added' && req.body.event_data.description === '') {
@@ -88,8 +88,8 @@ app.post('', (req, res) => {
                         .addField('Task id', `${req.body.event_data.id}`, true);
                     message_embed_channel(msg);
                     
-                    if(req.body.event_data.labels.includes(todoist_labels.strKey.Notion)) {
-                        notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist_labels.strKey.Discord))
+                    if(req.body.event_data.labels.includes(todoist.getLabel('id', 'Notion'))) {
+                        notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist.getLabel('id', 'Discord')))
                             .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
                             .then((res) => {
                                 if(res) {
