@@ -53,19 +53,19 @@ var todoistHelper = (function () {
 
 	my.findAllLabels = async function () {
 		var res = [];
-		await my.api.label.findAll().then(function (labels) {
-			labels.forEach(res.push({name: label.name, id: label.id}))
+		await my.api.section.findAll().then(function (labels) {
+			labels.forEach(label => res.push({name: label.name, id: label.id}))
 		})
 		return res;
 	}
 
 	my.getLabel = function(key, target) {
-        result = projects.reduce(function (r, a) {
+        result = my.findAllLabels().reduce(function (r, a) {
             r[a[key]] = r[a[key]] || [];
             r[a[key]].push(a);
             return r;
         }, Object.create(null));
-		return object[target];
+		return result[target];
     }
 
 	my.findSection = async function (id) {
@@ -73,16 +73,19 @@ var todoistHelper = (function () {
 		return res;
 	}
 
+	my.getSection = async function (key, target) {
+		result = my.findAllSections().reduce(function (r, a) {
+            r[a[key]] = r[a[key]] || [];
+            r[a[key]].push(a);
+            return r;
+        }, Object.create(null));
+		return result[target];
+	}
+
 	my.findAllSections = async function () {
-		var res = {
-			strKey: {},
-			intKey: {}
-		};
+		var res = [];
 		await my.api.section.findAll().then(function (sections) {
-			sections.forEach(function (section) {
-				res.strKey[section.name] = section.id;
-				res.intKey[section.id] = section.name;
-			})
+			sections.forEach(section => res.push({name: section.name, id: section.id}))
 		})
 		return res;
 	}
@@ -93,17 +96,20 @@ var todoistHelper = (function () {
 	}
 
 	my.findAllProjects = async function () {
-		var res = {
-			strKey: {},
-			intKey: {}
-		};
+		var res = [];
 		await my.api.project.findAll().then(function (projects) {
-			projects.forEach(function (project) {
-				res.strKey[project.name] = project.id;
-				res.intKey[project.id] = project.name;
-			})
+			projects.forEach(project => res.push({name: project.name, id: project.id}));
 		})
 		return res;
+	}
+
+	my.getProject = async function (key, target) {
+		result = my.findAllProjects().reduce(function (r, a) {
+            r[a[key]] = r[a[key]] || [];
+            r[a[key]].push(a);
+            return r;
+        }, Object.create(null));
+		return result[target];
 	}
     
 	return my;
