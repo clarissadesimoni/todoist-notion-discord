@@ -132,7 +132,7 @@ app.post('', (req, res) => {
                                 .addField('Task name', req.body.event_data.content, true)
                                 .addField('Task id', `${req.body.event_data.id}`, true);
                             message_embed_channel(msg);
-                            notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist_labels.strKey.Discord))
+                            notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist.getLabel('id', 'Discord')))
                                 .then(status => {
                                     if(status) {
                                         // later on: create tasklist function
