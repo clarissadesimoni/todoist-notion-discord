@@ -4,77 +4,88 @@
         "notion_name": "Tecnologie web",
         "todoist_id": 2267901579,
         "todoist_name": "TecnologieWeb",
-        "course_code": "TWT"
+        "course_code": "TWT",
+        "course_id": "bc5f8cc2-0cc1-4f40-911f-6c649704cf32"
     },
     {
         "notion_id": "727f2cbb-bb52-4e39-9b5c-1f30ff4268df",
         "notion_name": "Laboratorio di amministrazione di sistemi",
         "todoist_id": 2267901582,
         "todoist_name": "LaboratorioDiAmministrazioneDiSistemi",
-        "course_code": "LAS"
+        "course_code": "LAS",
+        "course_id": "c6d49228-d7a8-4303-96f1-c1132cdf0481"
     },
     {
         "notion_id": "ac5bd8e6-9372-4f87-b814-732b74f20c7b",
         "notion_name": "Ingegneria del software",
         "todoist_id": 2267901583,
         "todoist_name": "IngegneriaDelSoftware",
-        "course_code": "SWE"
+        "course_code": "SWE",
+        "course_id": "7ec9bbce-f670-41cb-856a-619a8eed76c0"
     },
     {
         "notion_id": "4066bf6b-9758-4490-bacc-665ccf9a0cba",
         "notion_name": "Laboratorio di sicurezza informatica",
         "todoist_id": 2267901581,
         "todoist_name": "LaboratorioDiSicurezzaInformatica",
-        "course_code": "SEC"
+        "course_code": "SEC",
+        "course_id": "04cebc07-4c59-4f68-99b2-d50aa6b15833"
     },
     {
         "notion_id": "955c162d-e9d8-43eb-88a5-47fc1f58ac15",
         "notion_name": "Reti di calcolatori",
         "todoist_id": 2267901587,
         "todoist_name": "RetiDiCalcolatori",
-        "course_code": "RDC"
+        "course_code": "RDC",
+        "course_id": "980b2ddc-664b-4d41-a3d4-89a8da3ff6cf"
     },
     {
         "notion_id": "93700be6-8d7b-41c5-9a70-41b6c88b095f",
         "notion_name": "Progettazione di applicazioni web",
         "todoist_id": 2267901585,
         "todoist_name": "ProgettazioneDiApplicazioniWeb",
-        "course_code": "PAW"
+        "course_code": "PAW",
+        "course_id": "a6175b4a-4061-4280-8a4a-0ac11b853ae1"
     },
     {
-        "notion_id": "5576ca4f-f58a-4130-acc8-7ce8d77412f8",
+        "notion_id": "b8808cde-9617-4b94-b7a6-eafa0e7c58b0",
         "notion_name": "Elettronica",
         "todoist_id": 2267901588,
         "todoist_name": "Elettronica",
-        "course_code": "ELE"
+        "course_code": "ELE",
+        "course_id": "5576ca4f-f58a-4130-acc8-7ce8d77412f8"
     },
     {
         "notion_id": "012508aa-73ea-4605-9765-250c89bdb8c7",
         "notion_name": "Controlli automatici",
         "todoist_id": 2267901590,
         "todoist_name": "ControlliAutomatici",
-        "course_code": "CAT"
+        "course_code": "CAT",
+        "course_id": "24a782a1-8ef7-4f58-a8cf-74113a5d9bc4"
     },
     {
         "notion_id": "6bd8e14e-3dd3-4b1e-a664-11a55af54e7b",
         "notion_name": "Elettrotecnica",
         "todoist_id": 2267901591,
         "todoist_name": "Elettrotecnica",
-        "course_code": "ETC"
+        "course_code": "ETC",
+        "course_id": "2d3bd2a0-ae3b-4335-a922-24d3c4eef1d4"
     },
     {
         "notion_id": "e87932c0-8616-4276-b33b-e222e6bd2f84",
         "notion_name": "Telecomunicazioni",
         "todoist_id": 2267901592,
         "todoist_name": "Telecomunicazioni",
-        "course_code": "TLC"
+        "course_code": "TLC",
+        "course_id": "54dc74e5-57bd-4bdb-b6a6-828ee9214e7a"
     },
     {
         "notion_id": "0f1a3606-1d28-48d6-8f43-cbb2b27400d1",
         "notion_name": "Reti logiche",
         "todoist_id": 2267901586,
         "todoist_name": "RetiLogiche",
-        "course_code": "RLT"
+        "course_code": "RLT",
+        "course_id": "85f1a2c9-702e-4fdc-ac10-08ee34148a7f"
     },
     {
         "notion_id": "22ea4d59-3861-4d47-aadb-ce80a07ec5b9",
