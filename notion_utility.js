@@ -119,6 +119,25 @@ var notionHelper = (function () {
         return response !== {};
     }
 
+    my.uncompleteTask = async function (notion_page_id) {
+        const response = await my.api.pages.update({
+            page_id: notion_page_id,
+            properties: {
+                Completed: {
+                    checkbox: false
+                }
+            }
+        });
+        return response !== {};
+    }
+
+    my.deleteTask = async function (notion_page_id) {
+        const response = await my.api.blocks.delete({
+            block_id: notion_page_id
+        });
+        return response !== {};
+    }
+
     my.addProject = async function (name) {
         var req_body = {
             parent: {

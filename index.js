@@ -112,7 +112,7 @@ app.post('', (req, res) => {
                                 if(status) {
                                     // later on: create tasklist function
                                     var msg = new Discord.MessageEmbed()
-                                        .setTitle('Task completed Todoist')
+                                        .setTitle('Task completed on Todoist')
                                         .addField('Task name', req.body.event_data.content, true)
                                         .addField('Task id', `${req.body.event_data.id}`, true);
                                     message_embed_channel(msg);
@@ -145,6 +145,46 @@ app.post('', (req, res) => {
                                     message_user('There was a problem updating the task in Notion');
                                     message_user(error.message);
                                 })
+                        } else {
+                            if(req.body.event_name === 'item:deleted' && req.body.event_data.description !== '') {
+                                notion.deleteTask(req.body.event_data.description)
+                                    .then(status => {
+                                        if(status) {
+                                            var msg = new Discord.MessageEmbed()
+                                                .setTitle('Task deleted on Todoist')
+                                                .addField('Task name', req.body.event_data.content, true)
+                                                .addField('Task id', `${req.body.event_data.id}`, true);
+                                            message_embed_channel(msg);
+                                            message_channel('You can update your tasklist if you want');
+                                        } else {
+                                            message_user('There was a problem with deleting the task on Notion');
+                                        }
+                                    })
+                                    .catch((error) => {
+                                        message_user('There was a problem deleting the task in Notion');
+                                        message_user(error.message);
+                                    })
+                            } else {
+                                if(req.body.event_name === 'item:uncompleted' && req.body.event_data.description !== '') {
+                                    notion.uncompleteTask(req.body.event_data.description)
+                                        .then(status => {
+                                            if(status) {
+                                                var msg = new Discord.MessageEmbed()
+                                                    .setTitle('Task uncompleted on Todoist')
+                                                    .addField('Task name', req.body.event_data.content, true)
+                                                    .addField('Task id', `${req.body.event_data.id}`, true);
+                                                message_embed_channel(msg);
+                                                message_channel('You can update your tasklist if you want');
+                                            } else {
+                                                message_user('There was a problem with uncompleting the task on Notion');
+                                            }
+                                        })
+                                        .catch((error) => {
+                                            message_user('There was a problem uncompleting the task in Notion');
+                                            message_user(error.message);
+                                        })
+                                }
+                            }
                         }
                     }
                 }
