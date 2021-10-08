@@ -82,6 +82,7 @@ app.post('', (req, res) => {
         // if(delivered_hmac === computed_hmac) {
             message_user(req.body.event_name);
             if (req.body.event_name.includes('item')) {
+                message_user('hey');
                 if(req.body.event_name.includes('item:added') && req.body.event_data.description === '') {
                     var msg = new Discord.MessageEmbed()
                         .setTitle('New task added to Todoist')
