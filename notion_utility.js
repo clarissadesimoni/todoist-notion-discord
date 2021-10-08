@@ -36,7 +36,7 @@ var notionHelper = (function () {
                 Project: {
                     relation: [
                         {
-                            id: my.groupBy("todoist_id")[todoist_project_id].notion_id
+                            id: my.getProject("todoist_id", todoist_project_id).notion_id
                         }
                     ]
                 },
@@ -85,7 +85,7 @@ var notionHelper = (function () {
                 Project: {
                     relation: [
                         {
-                            id: my.groupBy("todoist_id")[todoist_project_id].notion_id
+                            id: my.getProject("todoist_id", todoist_project_id).notion_id
                         }
                     ]
                 },
@@ -201,7 +201,7 @@ var notionHelper = (function () {
                 Course: {
                     relation: [
                         {
-                            id: my.groupBy("course_code")[name.slice(0, 3)].notion_id
+                            id: my.getProject("course_code", name.slice(0, 3)).notion_id
                         }
                     ]
                 },
