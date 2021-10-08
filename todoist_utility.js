@@ -59,7 +59,7 @@ var todoistHelper = (function () {
 		return res;
 	}
 
-	my.getLabel = function(key, target) {
+	my.getLabel = async function(key, target) {
         result = await my.findAllLabels().reduce(function (r, a) {
             r[a[key]] = r[a[key]] || [];
             r[a[key]].push(a);
