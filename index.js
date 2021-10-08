@@ -82,7 +82,6 @@ app.post('', (req, res) => {
         // if(delivered_hmac === computed_hmac) {
             message_user(req.body.event_name);
             if (req.body.event_name.includes('item')) {
-                message_user('hey');
                 if(req.body.event_name.includes('item:added') && req.body.event_data.description === '') {
                     var msg = new Discord.MessageEmbed()
                         .setTitle('New task added to Todoist')
@@ -129,6 +128,7 @@ app.post('', (req, res) => {
                             })
                     } else {
                         if(req.body.event_name.includes('item:updated') && req.body.event_data.description !== '') {
+                            message_user('hey');
                             var msg = new Discord.MessageEmbed()
                                 .setTitle('Task updated in Todoist')
                                 .addField('Task name', req.body.event_data.content, true)
