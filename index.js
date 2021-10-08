@@ -82,7 +82,7 @@ app.post('', (req, res) => {
         // if(delivered_hmac === computed_hmac) {
             message_user(req.body.event_name);
             if (req.body.event_name.includes('item')) {
-                if(req.body.event_name === 'item:added' && req.body.event_data.description === '') {
+                if(req.body.event_name == 'item:added' && req.body.event_data.description === '') {
                     var msg = new Discord.MessageEmbed()
                         .setTitle('New task added to Todoist')
                         .addField('Task name', req.body.event_data.content, true)
@@ -106,7 +106,7 @@ app.post('', (req, res) => {
                             })
                     }
                 } else {
-                    if(req.body.event_name === 'item:completed' && req.body.event_data.description !== '') {
+                    if(req.body.event_name == 'item:completed' && req.body.event_data.description !== '') {
                         // this task is completed on todoist but not on notion
                         notion.completeTask(req.body.event_data.description)
                             .then(status => {
@@ -127,7 +127,7 @@ app.post('', (req, res) => {
                                 message_user(error.message);
                             })
                     } else {
-                        if(req.body.event_name === 'item:updated' && req.body.event_data.description !== '') {
+                        if(req.body.event_name == 'item:updated' && req.body.event_data.description !== '') {
                             var msg = new Discord.MessageEmbed()
                                 .setTitle('Task updated in Todoist')
                                 .addField('Task name', req.body.event_data.content, true)
@@ -148,7 +148,7 @@ app.post('', (req, res) => {
                                     message_user(error.message);
                                 })
                         } else {
-                            if(req.body.event_name === 'item:deleted' && req.body.event_data.description !== '') {
+                            if(req.body.event_name == 'item:deleted' && req.body.event_data.description !== '') {
                                 notion.deleteTask(req.body.event_data.description)
                                     .then(status => {
                                         if(status) {
@@ -167,7 +167,7 @@ app.post('', (req, res) => {
                                         message_user(error.message);
                                     })
                             } else {
-                                if(req.body.event_name === 'item:uncompleted' && req.body.event_data.description !== '') {
+                                if(req.body.event_name == 'item:uncompleted' && req.body.event_data.description !== '') {
                                     notion.uncompleteTask(req.body.event_data.description)
                                         .then(status => {
                                             if(status) {
