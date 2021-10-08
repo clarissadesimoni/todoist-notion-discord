@@ -129,11 +129,6 @@ app.post('', (req, res) => {
                     } else {
                         if(req.body.event_name.includes('item:updated') && req.body.event_data.description !== '') {
                             message_user('hey');
-                            var msg = new Discord.MessageEmbed()
-                                .setTitle('Task updated in Todoist')
-                                .addField('Task name', req.body.event_data.content, true)
-                                .addField('Task id', `${req.body.event_data.id}`, true);
-                            message_embed_channel(msg);
                             message_user(`update() args: ${req.body.event_data.description}, ${req.body.event_data.content}, ${req.body.event_data.project_id}, ${req.body.event_data.due}, ${req.body.event_data.priority}, ${req.body.event_data.labels.includes(todoist.getLabel('id', 'Discord'))}`)
                             notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist.getLabel('id', 'Discord')))
                                 .then(status => {
@@ -148,6 +143,11 @@ app.post('', (req, res) => {
                                     message_user('There was a problem updating the task in Notion');
                                     message_user(error.message);
                                 })
+                                var msg = new Discord.MessageEmbed()
+                                    .setTitle('Task updated in Todoist')
+                                    .addField('Task name', req.body.event_data.content, true)
+                                    .addField('Task id', `${req.body.event_data.id}`, true);
+                                message_embed_channel(msg);
                         } else {
                             if(req.body.event_name.includes('item:deleted') && req.body.event_data.description !== '') {
                                 notion.deleteTask(req.body.event_data.description)
