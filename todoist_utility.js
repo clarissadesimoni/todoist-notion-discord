@@ -60,7 +60,7 @@ var todoistHelper = (function () {
 	}
 
 	my.getLabel = function(key, target) {
-        result = my.findAllLabels().reduce(function (r, a) {
+        result = await my.findAllLabels().reduce(function (r, a) {
             r[a[key]] = r[a[key]] || [];
             r[a[key]].push(a);
             return r;
