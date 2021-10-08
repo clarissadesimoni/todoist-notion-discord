@@ -55,10 +55,13 @@ var notionHelper = (function () {
         }
         if(typeof do_date !== 'undefined' && do_date !== null) {
             start_dt = new Date(do_date.date);
-            start_dt.setHours(start_dt.getHours() + 2);
+            // start_dt.setHours(start_dt.getHours() + 2);
+            end_dt = new Date(do_date.date);
+            end_dt.setHours(end_dt.getHours() + 24);
             req_body.properties.DoDate = {
                 date: {
-                    start: start_dt.toISOString().replace(/Z$/, '+02:00')
+                    start: start_dt.toISOString().replace(/Z$/, '+02:00'),
+                    end: end_dt.toISOString().replace(/Z$/, '+02:00')
                 }
             }
         }
