@@ -94,6 +94,10 @@ var notionHelper = (function () {
                 },
                 isOnDiscord: {
                     checkbox: in_discord
+                },
+                body: {
+                    id: notion_page_id,
+                    name: name
                 }
             }
         }
@@ -108,6 +112,7 @@ var notionHelper = (function () {
                     end: end_dt.toISOString().replace(/Z$/, '+02:00')
                 }
             }
+            req_body.properties.body.start = start_dt.toISOString().replace(/Z$/, '+02:00')
         }
         const response = await my.api.pages.update(req_body);
         return response !== {};
