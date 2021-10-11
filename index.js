@@ -56,7 +56,7 @@ function message_embed_user(msg) {
         });
 }
 
-var todoist_labels = [];
+// var todoist_labels = [];
 
 function hasLabel(labels, target) {
     return labels.includes(target);
@@ -82,8 +82,8 @@ app.post('', (req, res) => {
                         .addField('Task name', req.body.event_data.content, true)
                         .addField('Task id', `${req.body.event_data.id}`, true);
                     message_embed_channel(msg);
-                    if(hasLabel(req.body.event_data.labels, todoist_labels['Notion'][0].id)) {
-                        notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, todoist_labels['Discord'][0].id))
+                    if(hasLabel(req.body.event_data.labels, process.env.NOTION_LABEL)) {
+                        notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, process.env.DISCORD_LABEL))
                         .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
                         .then((res) => {
                             if(res) {
@@ -237,19 +237,20 @@ app.listen(PORT, () => {
 	console.log(`App up at port ${PORT}`);
 });
 
-fetch('https://api.todoist.com/rest/v1/labels', {headers: {'Authorization': `Bearer ${process.env.TODOIST_API_KEY}`}})
-then(labels => labels.json())
-.then((labels) => {
-    return labels.reduce(function (r, a) {
-        r[a['name']] = r[a['name']] || [];
-        r[a['name']].push(a);
-        return r;
-    }, Object.create(null));
-})
-.then((labels) => {
-    todoist_labels = labels;
-    discord.login(process.env.BOT_TOKEN);
-    app.listen(PORT, () => {
-        console.log(`App up at port ${PORT}`);
-    });
-})
+// fetch('https://api.todoist.com/rest/v1/labels', {headers: {'Authorization': `Bearer ${process.env.TODOIST_API_KEY}`}})
+// then(labels => labels.json())
+// .then((labels) => {
+//     return labels.reduce(function (r, a) {
+//         r[a['name']] = r[a['name']] || [];
+//         r[a['name']].push(a);
+//         return r;
+//     }, Object.create(null));
+// })
+// .then((labels) => {
+//     todoist_labels = labels;
+// })
+
+discord.login(process.env.BOT_TOKEN);
+app.listen(PORT, () => {
+    console.log(`App up at port ${PORT}`);
+});
