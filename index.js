@@ -92,23 +92,28 @@ app.post('', (req, res) => {
                         .addField('Task name', req.body.event_data.content, true)
                         .addField('Task id', `${req.body.event_data.id}`, true);
                     message_embed_channel(msg);
-                    if(hasLabel(req.body.event_data.labels, todoist.getLabel('name', 'Notion').id)) {
-                        message_user('Here');
-                        notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist.getLabel('name', 'Discord').id))
-                            .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
-                            .then((res) => {
-                                if(res) {
-                                    message_channel('The task has been added to Notion');
-                                } else {
+                    todoist.getLabel('name', 'Notion')
+                    .then(labelNotion => {
+                        if(hasLabel(req.body.event_data.labels, labelNotion.id)) {
+                            todoist.getLabel('name', 'Discord')
+                            .then(labelDiscord => {
+                                notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, labelDiscord.id))
+                                .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
+                                .then((res) => {
+                                    if(res) {
+                                        message_channel('The task has been added to Notion');
+                                    } else {
+                                        message_user('There was a problem adding the task to Notion');
+                                        message_user(error.message);
+                                    }
+                                })
+                                .catch((error) => {
                                     message_user('There was a problem adding the task to Notion');
                                     message_user(error.message);
-                                }
+                                })
                             })
-                            .catch((error) => {
-                                message_user('There was a problem adding the task to Notion');
-                                message_user(error.message);
-                            })
-                    }
+                        }
+                    })
                 } else {
                     if(req.body.event_name.includes('item:completed') && req.body.event_data.description !== '') {
                         // this task is completed on todoist but not on notion
@@ -137,7 +142,9 @@ app.post('', (req, res) => {
                                 .addField('Task name', req.body.event_data.content, true)
                                 .addField('Task id', `${req.body.event_data.id}`, true);
                             message_embed_channel(msg);
-                            notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist.getLabel('name', 'Discord').id))
+                            todoist.getLabel('name', 'Discord')
+                            .then(function(labelDiscord) {
+                                notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, labelDiscord.id))
                                 .then(status => {
                                     if(status) {
                                         // later on: create tasklist function
@@ -150,6 +157,7 @@ app.post('', (req, res) => {
                                     message_user('There was a problem updating the task in Notion');
                                     message_user(error.message);
                                 })
+                            })
                         } else {
                             if(req.body.event_name.includes('item:deleted') && req.body.event_data.description !== '') {
                                 notion.deleteTask(req.body.event_data.description)
