@@ -61,6 +61,7 @@ function hasLabel(labels, target) {
 }
 
 var todoist_labels = {};
+var labels_ready = false;
 (async () => {
     todoist_labels = await todoist.findAllLabels()
         .catch(error => {
@@ -91,7 +92,7 @@ app.post('', (req, res) => {
                         .addField('Task name', req.body.event_data.content, true)
                         .addField('Task id', `${req.body.event_data.id}`, true);
                     message_embed_channel(msg);
-                    message_user(typeof todoist.getLabel('name', 'Notion').id)
+                    while (typeof todoist.getLabel('name', 'Notion').id === 'undefined') {}
                     if(hasLabel(req.body.event_data.labels, todoist.getLabel('name', 'Notion').id)) {
                         message_user('Here');
                         notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist.getLabel('name', 'Discord').id))
