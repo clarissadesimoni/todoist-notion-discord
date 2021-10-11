@@ -77,10 +77,11 @@ var notionHelper = (function () {
                     type: "title",
                     title: [
                         {
-                            rich_text: {
-                                content: name,
-                            },
-                        },
+                            type: "text",
+                            text: {
+                                content: name
+                            }
+                        }
                     ],
                 },
                 Project: {
