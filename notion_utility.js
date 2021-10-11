@@ -89,12 +89,12 @@ var notionHelper = (function () {
                 //         }
                 //     ]
                 // },
-                Priority: {
-                    number: priority
-                },
-                // isOnDiscord: {
-                //     checkbox: in_discord
-                // }
+                // Priority: {
+                //     number: priority
+                // },
+                isOnDiscord: {
+                    checkbox: in_discord
+                }
             }
         }
         if(typeof do_date !== 'undefined' && do_date !== null) {
