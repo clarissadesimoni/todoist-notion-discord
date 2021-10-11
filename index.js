@@ -117,7 +117,6 @@ app.post('', (req, res) => {
                     })
                 } else {
                     if(req.body.event_name.includes('item:completed') && req.body.event_data.description !== '') {
-                        // this task is completed on todoist but not on notion
                         notion.completeTask(req.body.event_data.description)
                             .then(status => {
                                 if(status) {
