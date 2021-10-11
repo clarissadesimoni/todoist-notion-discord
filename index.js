@@ -87,7 +87,7 @@ app.post('', (req, res) => {
                         .addField('Task name', req.body.event_data.content, true)
                         .addField('Task id', `${req.body.event_data.id}`, true);
                     message_embed_channel(msg);
-                    message_user(req.body.event_data.labels);
+                    message_user(JSON.stringify(req.body.event_data.labels, null, 4));
                     message_user(todoist.getLabel('name', 'Notion').id);
                     message_user(req.body.event_data.labels.includes(todoist.getLabel('name', 'Notion').id));
                     if(req.body.event_data.labels.includes(todoist.getLabel('name', 'Notion').id)) {
