@@ -77,8 +77,8 @@ var notionHelper = (function () {
                     type: "title",
                     title: [
                         {
-                            type: "text",
-                            text: {
+                            type: "rich_text",
+                            rich_text: {
                                 content: name
                             }
                         }
