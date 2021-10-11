@@ -82,6 +82,9 @@ app.post('', (req, res) => {
                         .addField('Task name', req.body.event_data.content, true)
                         .addField('Task id', `${req.body.event_data.id}`, true);
                     message_embed_channel(msg);
+                    message_user(req.body.event_data.labels);
+                    message_user(process.env.NOTION_LABEL);
+                    message_user(hasLabel(req.body.event_data.labels, process.env.NOTION_LABEL));
                     if(hasLabel(req.body.event_data.labels, process.env.NOTION_LABEL)) {
                         notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, process.env.DISCORD_LABEL))
                         .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
