@@ -73,17 +73,17 @@ var notionHelper = (function () {
         var req_body = {
             page_id: notion_page_id,
             properties: {
-                // Name: {
-                //     type: "title",
-                //     title: [
-                //         {
-                //             type: "rich_text",
-                //             rich_text: {
-                //                 content: name
-                //             }
-                //         }
-                //     ],
-                // },
+                Name: {
+                    type: "title",
+                    title: [
+                        {
+                            type: "rich_text",
+                            rich_text: {
+                                content: name
+                            }
+                        }
+                    ],
+                },
                 Project: {
                     type: "relation",
                     relation: [
@@ -100,18 +100,18 @@ var notionHelper = (function () {
                 }
             }
         }
-        if(typeof do_date !== 'undefined' && do_date !== null) {
-            start_dt = new Date(do_date.date);
-            // start_dt.setHours(start_dt.getHours() + 2);
-            end_dt = new Date(do_date.date);
-            end_dt.setHours(end_dt.getHours() + 24);
-            req_body.properties.DoDate = {
-                date: {
-                    start: start_dt.toISOString().replace(/Z$/, '+02:00'),
-                    end: end_dt.toISOString().replace(/Z$/, '+02:00')
-                }
-            }
-        }
+        // if(typeof do_date !== 'undefined' && do_date !== null) {
+        //     start_dt = new Date(do_date.date);
+        //     // start_dt.setHours(start_dt.getHours() + 2);
+        //     end_dt = new Date(do_date.date);
+        //     end_dt.setHours(end_dt.getHours() + 24);
+        //     req_body.properties.DoDate = {
+        //         date: {
+        //             start: start_dt.toISOString().replace(/Z$/, '+02:00'),
+        //             end: end_dt.toISOString().replace(/Z$/, '+02:00')
+        //         }
+        //     }
+        // }
         const response = await my.api.pages.update(req_body);
         return response !== {};
     }
