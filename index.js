@@ -229,6 +229,7 @@ app.listen(PORT, () => {
 });
 
 fetch('https://api.todoist.com/rest/v1/labels', {headers: {'Authorization': `Bearer ${process.env.TODOIST_API_KEY}`}})
+then(labels => labels.json())
 .then((labels) => {
     return labels.reduce(function (r, a) {
         r[a['name']] = r[a['name']] || [];
