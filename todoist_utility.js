@@ -65,7 +65,7 @@ var todoistHelper = (function () {
             r[a[key]].push(a);
             return r;
         }, Object.create(null));
-		return result[target];
+		return result[target][0];
     }
 
 	my.findSection = async function (id) {
@@ -79,7 +79,7 @@ var todoistHelper = (function () {
             r[a[key]].push(a);
             return r;
         }, Object.create(null));
-		return result[target];
+		return result[target][0];
 	}
 
 	my.findAllSections = async function () {
@@ -109,7 +109,7 @@ var todoistHelper = (function () {
             r[a[key]].push(a);
             return r;
         }, Object.create(null));
-		return result[target];
+		return result[target][0];
 	}
     
 	return my;
