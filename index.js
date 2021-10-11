@@ -228,7 +228,7 @@ app.listen(PORT, () => {
 	console.log(`App up at port ${PORT}`);
 });
 
-todoist.findAllLabels()
+fetch('https://api.todoist.com/rest/v1/labels', {headers: {'Authorization': `Bearer ${process.env.TODOIST_API_KEY}`}})
 .then((labels) => {
     return labels.reduce(function (r, a) {
         r[a['name']] = r[a['name']] || [];
