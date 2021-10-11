@@ -56,6 +56,8 @@ function message_embed_user(msg) {
         });
 }
 
+var todoist_labels = [];
+
 function hasLabel(labels, target) {
     return labels.includes(target);
 }
@@ -225,3 +227,19 @@ discord.login(process.env.BOT_TOKEN);
 app.listen(PORT, () => {
 	console.log(`App up at port ${PORT}`);
 });
+
+todoist.findAllLabels()
+.then((labels) => {
+    return labels.reduce(function (r, a) {
+        r[a['name']] = r[a['name']] || [];
+        r[a['name']].push(a);
+        return r;
+    }, Object.create(null));
+})
+.then((labels) => {
+    todoist_labels = labels;
+    discord.login(process.env.BOT_TOKEN);
+    app.listen(PORT, () => {
+        console.log(`App up at port ${PORT}`);
+    });
+})
