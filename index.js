@@ -60,18 +60,6 @@ function hasLabel(labels, target) {
     return labels.includes(target);
 }
 
-var todoist_labels = {};
-var labels_ready = false;
-(async () => {
-    todoist_labels = await todoist.findAllLabels()
-        .catch(error => {
-            message_user("Error on getting todoist labels. Check logs for details.");
-            console.log('Error on getting todoist labels');
-            console.log(error.message)
-        });
-    message_user('Labels are ready');
-})();
-
 discord.on('ready', () => {
     message_user('Hey, The bot is up!');
 });
@@ -232,14 +220,7 @@ app.post('', (req, res) => {
 })
 
 
-discord.login(process.env.BOT_TOKEN)
-    .then(str => {
-        todoist.findAllLabels()
-        .then(labels => {
-            todoist_labels = labels;
-            message_user('Everything is ready');
-        })
-    });
+discord.login(process.env.BOT_TOKEN);
 
 app.listen(PORT, () => {
 	console.log(`App up at port ${PORT}`);
