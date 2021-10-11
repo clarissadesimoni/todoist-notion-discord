@@ -53,7 +53,7 @@ var todoistHelper = (function () {
 
 	my.findAllLabels = async function () {
 		var res = [];
-		await my.api.section.findAll().then(function (labels) {
+		await my.api.label.findAll().then(function (labels) {
 			labels.forEach(label => res.push({name: label.name, id: label.id}))
 		})
 		return res;
