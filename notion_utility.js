@@ -138,8 +138,9 @@ var notionHelper = (function () {
     }
 
     my.deleteTask = async function (notion_page_id) {
-        const response = await my.api.blocks.delete({
-            block_id: notion_page_id
+        const response = await my.api.pages.update({
+            page_id: notion_page_id,
+            archived: true
         });
         return response !== {};
     }
