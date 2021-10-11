@@ -88,9 +88,9 @@ app.post('', (req, res) => {
                         .addField('Task id', `${req.body.event_data.id}`, true);
                     message_embed_channel(msg);
                     
-                    if(req.body.event_data.labels.includes(todoist.getLabel('name', 'Notion'))) {
+                    if(req.body.event_data.labels.includes(todoist.getLabel('name', 'Notion').id)) {
                         message_user('Here');
-                        notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist.getLabel('name', 'Discord')))
+                        notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist.getLabel('name', 'Discord').id))
                             .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
                             .then((res) => {
                                 if(res) {
@@ -133,7 +133,7 @@ app.post('', (req, res) => {
                                 .addField('Task name', req.body.event_data.content, true)
                                 .addField('Task id', `${req.body.event_data.id}`, true);
                             message_embed_channel(msg);
-                            notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist.getLabel('name', 'Discord')))
+                            notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist.getLabel('name', 'Discord').id))
                                 .then(status => {
                                     if(status) {
                                         // later on: create tasklist function
