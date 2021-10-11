@@ -60,11 +60,13 @@ var todoistHelper = (function () {
 	}
 
 	my.getLabel = async function(key, target) {
-        result = await my.findAllLabels().reduce(function (r, a) {
-            r[a[key]] = r[a[key]] || [];
-            r[a[key]].push(a);
-            return r;
-        }, Object.create(null));
+        const result = await my.findAllLabels().then(function (labels) {
+			return labels.reduce(function (r, a) {
+				r[a[key]] = r[a[key]] || [];
+				r[a[key]].push(a);
+				return r;
+			}, Object.create(null));
+		});
 		return result[target][0];
     }
 
@@ -74,11 +76,13 @@ var todoistHelper = (function () {
 	}
 
 	my.getSection = async function (key, target) {
-		result = my.findAllSections().reduce(function (r, a) {
-            r[a[key]] = r[a[key]] || [];
-            r[a[key]].push(a);
-            return r;
-        }, Object.create(null));
+		const result = await my.findAllSections().then(function (sections) {
+			return sections.reduce(function (r, a) {
+				r[a[key]] = r[a[key]] || [];
+				r[a[key]].push(a);
+				return r;
+			}, Object.create(null));
+		});
 		return result[target][0];
 	}
 
@@ -104,11 +108,13 @@ var todoistHelper = (function () {
 	}
 
 	my.getProject = async function (key, target) {
-		result = my.findAllProjects().reduce(function (r, a) {
-            r[a[key]] = r[a[key]] || [];
-            r[a[key]].push(a);
-            return r;
-        }, Object.create(null));
+		const result = await my.findAllProjects().then(function (projects) {
+			return projects.reduce(function (r, a) {
+				r[a[key]] = r[a[key]] || [];
+				r[a[key]].push(a);
+				return r;
+			}, Object.create(null));
+		});
 		return result[target][0];
 	}
     
