@@ -56,6 +56,15 @@ function message_embed_user(msg) {
         });
 }
 
+function hasLabel(labels, target) {
+    for(var i = 0; i < labels.length; i++) {
+        if (typeof labels[i] === 'number') {
+            labels[i] = `${labels[i]}`
+        }
+    }
+    return labels.includes(`${target}`)
+}
+
 var todoist_labels = {};
 (async () => {
     todoist_labels = await todoist.findAllLabels()
@@ -87,10 +96,8 @@ app.post('', (req, res) => {
                         .addField('Task name', req.body.event_data.content, true)
                         .addField('Task id', `${req.body.event_data.id}`, true);
                     message_embed_channel(msg);
-                    message_user(JSON.stringify(req.body.event_data.labels, null, 4));
-                    message_user(todoist.getLabel('name', 'Notion').id);
-                    message_user(req.body.event_data.labels.includes(`${todoist.getLabel('name', 'Notion').id}`));
-                    if(req.body.event_data.labels.includes(`${todoist.getLabel('name', 'Notion').id}`)) {
+                    
+                    if(hasLabel(req.body.event_data.labels, todoist.getLabel('name', 'Notion').id)) {
                         message_user('Here');
                         notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist.getLabel('name', 'Discord').id))
                             .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
