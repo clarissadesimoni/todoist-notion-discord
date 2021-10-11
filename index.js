@@ -94,6 +94,7 @@ app.post('', (req, res) => {
                     message_embed_channel(msg);
                     todoist.getLabel('name', 'Notion')
                     .then(labelNotion => {
+                        message_user(typeof labelNotion.id)
                         if(hasLabel(req.body.event_data.labels, labelNotion.id)) {
                             todoist.getLabel('name', 'Discord')
                             .then(labelDiscord => {
