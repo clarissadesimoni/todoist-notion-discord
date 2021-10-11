@@ -59,7 +59,7 @@ function message_embed_user(msg) {
 // var todoist_labels = [];
 
 function hasLabel(labels, target) {
-    return labels.includes(target);
+    return labels.includes(parseInt(target));
 }
 
 discord.on('ready', () => {
@@ -84,6 +84,7 @@ app.post('', (req, res) => {
                     message_embed_channel(msg);
                     message_user(req.body.event_data.labels);
                     message_user(process.env.NOTION_LABEL);
+                    message_user(typeof process.env.NOTION_LABEL);
                     message_user(hasLabel(req.body.event_data.labels, process.env.NOTION_LABEL));
                     if(hasLabel(req.body.event_data.labels, process.env.NOTION_LABEL)) {
                         notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, process.env.DISCORD_LABEL))
