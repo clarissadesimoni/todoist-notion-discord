@@ -82,19 +82,19 @@ var notionHelper = (function () {
                         },
                     ],
                 },
-                Project: {
-                    relation: [
-                        {
-                            id: my.getProject("todoist_id", todoist_project_id).notion_id
-                        }
-                    ]
-                },
-                Priority: {
-                    number: priority
-                },
-                isOnDiscord: {
-                    checkbox: in_discord
-                }
+                // Project: {
+                //     relation: [
+                //         {
+                //             id: my.getProject("todoist_id", todoist_project_id).notion_id
+                //         }
+                //     ]
+                // },
+                // Priority: {
+                //     number: priority
+                // },
+                // isOnDiscord: {
+                //     checkbox: in_discord
+                // }
             }
         }
         if(typeof do_date !== 'undefined' && do_date !== null) {
