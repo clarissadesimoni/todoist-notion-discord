@@ -249,8 +249,3 @@ app.listen(PORT, () => {
 // .then((labels) => {
 //     todoist_labels = labels;
 // })
-
-discord.login(process.env.BOT_TOKEN);
-app.listen(PORT, () => {
-    console.log(`App up at port ${PORT}`);
-});
