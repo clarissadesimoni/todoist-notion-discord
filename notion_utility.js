@@ -73,25 +73,26 @@ var notionHelper = (function () {
         var req_body = {
             page_id: notion_page_id,
             properties: {
-                // Name: {
-                //     title: [
-                //         {
-                //             rich_text: {
-                //                 content: name,
-                //             },
-                //         },
-                //     ],
-                // },
-                // Project: {
-                //     relation: [
-                //         {
-                //             id: my.getProject("todoist_id", todoist_project_id).notion_id
-                //         }
-                //     ]
-                // },
-                // Priority: {
-                //     number: priority
-                // },
+                Name: {
+                    type: "title",
+                    title: [
+                        {
+                            rich_text: {
+                                content: name,
+                            },
+                        },
+                    ],
+                },
+                Project: {
+                    relation: [
+                        {
+                            database_id: my.getProject("todoist_id", todoist_project_id).notion_id
+                        }
+                    ]
+                },
+                Priority: {
+                    number: priority
+                },
                 isOnDiscord: {
                     checkbox: in_discord
                 }
