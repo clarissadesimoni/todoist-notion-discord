@@ -14,7 +14,7 @@ var notionHelper = (function () {
             r[a[key]].push(a);
             return r;
         }, Object.create(null));
-        return result[target][0];
+        return result[target][0] || result[parseInt(target)][0];
     }
 
     my.createTask = async function(name, todoist_project_id, todoist_task_id, do_date, priority, in_discord) {
