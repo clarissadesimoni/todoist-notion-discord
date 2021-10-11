@@ -82,29 +82,41 @@ app.post('', (req, res) => {
                         .addField('Task name', req.body.event_data.content, true)
                         .addField('Task id', `${req.body.event_data.id}`, true);
                     message_embed_channel(msg);
-                    todoist.getLabel('name', 'Notion')
-                    .then(labelNotion => {
-                        message_user(typeof labelNotion.id)
-                        if(hasLabel(req.body.event_data.labels, labelNotion.id)) {
-                            todoist.getLabel('name', 'Discord')
-                            .then(labelDiscord => {
-                                notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, labelDiscord.id))
-                                .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
-                                .then((res) => {
-                                    if(res) {
-                                        message_channel('The task has been added to Notion');
-                                    } else {
-                                        message_user('There was a problem adding the task to Notion');
-                                        message_user(error.message);
-                                    }
-                                })
-                                .catch((error) => {
-                                    message_user('There was a problem adding the task to Notion');
-                                    message_user(error.message);
-                                })
-                            })
-                        }
-                    })
+                    if(hasLabel(req.body.event_data.labels, todoist_labels['Notion'][0].id)) {
+                        notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, todoist_labels['Discord'][0].id))
+                        .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
+                        .then((res) => {
+                            if(res) {
+                                message_channel('The task has been added to Notion');
+                            } else {
+                                message_user('There was a problem adding the task to Notion');
+                                message_user(error.message);
+                            }
+                        })
+                    }
+                    // todoist.getLabel('name', 'Notion')
+                    // .then(labelNotion => {
+                    //     message_user(typeof labelNotion.id)
+                    //     if(hasLabel(req.body.event_data.labels, labelNotion.id)) {
+                    //         todoist.getLabel('name', 'Discord')
+                    //         .then(labelDiscord => {
+                    //             notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, labelDiscord.id))
+                    //             .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
+                    //             .then((res) => {
+                    //                 if(res) {
+                    //                     message_channel('The task has been added to Notion');
+                    //                 } else {
+                    //                     message_user('There was a problem adding the task to Notion');
+                    //                     message_user(error.message);
+                    //                 }
+                    //             })
+                    //             .catch((error) => {
+                    //                 message_user('There was a problem adding the task to Notion');
+                    //                 message_user(error.message);
+                    //             })
+                    //         })
+                    //     }
+                    // })
                 } else {
                     if(req.body.event_name.includes('item:completed') && req.body.event_data.description !== '') {
                         notion.completeTask(req.body.event_data.description)
@@ -216,9 +228,6 @@ app.post('', (req, res) => {
         message_user('A 400 (Bad request) status code has been sent to a request');
         res.status(400).send('Bad request');
     }
-    //handle notion
-
-
 })
 
 
