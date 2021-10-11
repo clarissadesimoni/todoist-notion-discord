@@ -89,6 +89,7 @@ app.post('', (req, res) => {
                     message_embed_channel(msg);
                     
                     if(req.body.event_data.labels.includes(todoist.getLabel('id', 'Notion'))) {
+                        message_user('Here');
                         notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, req.body.event_data.labels.includes(todoist.getLabel('id', 'Discord')))
                             .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
                             .then((res) => {

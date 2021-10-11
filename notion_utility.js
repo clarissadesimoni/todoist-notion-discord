@@ -73,17 +73,17 @@ var notionHelper = (function () {
         var req_body = {
             page_id: notion_page_id,
             properties: {
-                // Name: {
-                //     type: "title",
-                //     title: [
-                //         {
-                //             type: "rich_text",
-                //             rich_text: {
-                //                 content: name
-                //             }
-                //         }
-                //     ],
-                // },
+                Name: {
+                    type: "title",
+                    title: [
+                        {
+                            type: "rich_text",
+                            rich_text: {
+                                content: name
+                            }
+                        }
+                    ],
+                },
                 Project: {
                     type: "relation",
                     relation: [
