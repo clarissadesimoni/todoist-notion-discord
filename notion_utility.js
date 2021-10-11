@@ -84,6 +84,7 @@ var notionHelper = (function () {
                     ],
                 },
                 Project: {
+                    type: "relation",
                     relation: [
                         {
                             database_id: my.getProject("todoist_id", todoist_project_id).notion_id
