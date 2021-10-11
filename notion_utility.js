@@ -82,16 +82,16 @@ var notionHelper = (function () {
                 //         },
                 //     ],
                 // },
-                Project: {
-                    relation: [
-                        {
-                            id: my.getProject("todoist_id", todoist_project_id).notion_id
-                        }
-                    ]
-                },
-                // Priority: {
-                //     number: priority
+                // Project: {
+                //     relation: [
+                //         {
+                //             id: my.getProject("todoist_id", todoist_project_id).notion_id
+                //         }
+                //     ]
                 // },
+                Priority: {
+                    number: priority
+                },
                 // isOnDiscord: {
                 //     checkbox: in_discord
                 // }
