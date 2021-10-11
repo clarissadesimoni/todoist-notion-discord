@@ -87,7 +87,7 @@ app.post('', (req, res) => {
                     message_user(typeof process.env.NOTION_LABEL);
                     message_user(hasLabel(req.body.event_data.labels, process.env.NOTION_LABEL));
                     if(hasLabel(req.body.event_data.labels, process.env.NOTION_LABEL)) {
-                        notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, process.env.DISCORD_LABEL))
+                        notion.createTask(req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.id, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, parseInt(process.env.DISCORD_LABEL)))
                         .then(id => todoist.updateTask(req.body.event_data.id, {description: id}))
                         .then((res) => {
                             if(res) {
@@ -148,22 +148,35 @@ app.post('', (req, res) => {
                                 .addField('Task name', req.body.event_data.content, true)
                                 .addField('Task id', `${req.body.event_data.id}`, true);
                             message_embed_channel(msg);
-                            todoist.getLabel('name', 'Discord')
-                            .then(function(labelDiscord) {
-                                notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, labelDiscord.id))
-                                .then(status => {
-                                    if(status) {
-                                        // later on: create tasklist function
-                                        message_channel('You can update your tasklist if you want');
-                                    } else {
-                                        message_user('There was a problem with updating the task on Notion');
-                                    }
-                                })
-                                .catch((error) => {
-                                    message_user('There was a problem updating the task in Notion');
-                                    message_user(error.message);
-                                })
+                            notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, parseInt(process.env.DISCORD_LABEL)))
+                            .then(status => {
+                                if(status) {
+                                    // later on: create tasklist function
+                                    message_channel('You can update your tasklist if you want');
+                                } else {
+                                    message_user('There was a problem with updating the task on Notion');
+                                }
                             })
+                            .catch((error) => {
+                                message_user('There was a problem updating the task in Notion');
+                                message_user(error.message);
+                            })
+                            // todoist.getLabel('name', 'Discord')
+                            // .then(function(labelDiscord) {
+                            //     notion.updateTask(req.body.event_data.description, req.body.event_data.content, `${req.body.event_data.project_id}`, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, labelDiscord.id))
+                            //     .then(status => {
+                            //         if(status) {
+                            //             // later on: create tasklist function
+                            //             message_channel('You can update your tasklist if you want');
+                            //         } else {
+                            //             message_user('There was a problem with updating the task on Notion');
+                            //         }
+                            //     })
+                            //     .catch((error) => {
+                            //         message_user('There was a problem updating the task in Notion');
+                            //         message_user(error.message);
+                            //     })
+                            // })
                         } else {
                             if(req.body.event_name.includes('item:deleted') && req.body.event_data.description !== '') {
                                 notion.deleteTask(req.body.event_data.description)
