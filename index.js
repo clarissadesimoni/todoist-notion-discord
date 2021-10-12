@@ -144,6 +144,7 @@ app.post('', (req, res) => {
                                 .addField('Task name', req.body.event_data.content, true)
                                 .addField('Task id', `${req.body.event_data.id}`, true);
                             message_embed_channel(msg);
+                            message_user(req.body.event_data.project_id);
                             notion.updateTask(req.body.event_data.description, req.body.event_data.content, req.body.event_data.project_id, req.body.event_data.due, 5 - req.body.event_data.priority, hasLabel(req.body.event_data.labels, process.env.DISCORD_LABEL))
                             .then(status => {
                                 if(status) {
