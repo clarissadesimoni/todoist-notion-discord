@@ -73,16 +73,16 @@ var notionHelper = (function () {
         var req_body = {
             page_id: notion_page_id,
             properties: {
-                Name: {
-                    title: [
-                        {
-                            type: "rich_text",
-                            rich_text: {
-                                content: name
-                            }
-                        }
-                    ],
-                },
+                // Name: {
+                //     title: [
+                //         {
+                //             type: "rich_text",
+                //             rich_text: {
+                //                 content: name
+                //             }
+                //         }
+                //     ],
+                // },
                 Project: {
                     type: "relation",
                     relation: [
@@ -94,9 +94,9 @@ var notionHelper = (function () {
                 Priority: {
                     number: priority
                 },
-                // isOnDiscord: {
-                //     checkbox: in_discord
-                // }
+                isOnDiscord: {
+                    checkbox: in_discord
+                }
             }
         }
         if(typeof do_date !== 'undefined' && do_date !== null) {
