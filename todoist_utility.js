@@ -122,9 +122,3 @@ var todoistHelper = (function () {
 }());
 
 module.exports = todoistHelper;
-
-(async() => {
-	const res = await todoistHelper.getLabel('name', 'Notion').then(function (label) {
-		console.log(label.id);
-	})
-})();
