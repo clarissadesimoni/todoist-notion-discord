@@ -73,25 +73,25 @@ var notionHelper = (function () {
         var req_body = {
             page_id: notion_page_id,
             properties: {
-                Name: {
-                    type: "title",
-                    title: [
-                        {
-                            type: "rich_text",
-                            rich_text: {
-                                content: name
-                            }
-                        }
-                    ],
-                },
-                // Project: {
-                //     type: "relation",
-                //     relation: [
+                // Name: {
+                //     type: "title",
+                //     title: [
                 //         {
-                //             id: my.getProject("todoist_id", todoist_project_id).notion_id
+                //             type: "rich_text",
+                //             rich_text: {
+                //                 content: name
+                //             }
                 //         }
-                //     ]
+                //     ],
                 // },
+                Project: {
+                    type: "relation",
+                    relation: [
+                        {
+                            id: my.getProject("todoist_id", todoist_project_id).notion_id
+                        }
+                    ]
+                },
                 Priority: {
                     number: priority
                 },
