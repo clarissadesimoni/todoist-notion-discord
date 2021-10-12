@@ -70,7 +70,6 @@ var notionHelper = (function () {
     }
 
     my.updateTask = async function(notion_page_id, name, todoist_project_id, do_date, priority, in_discord) {
-        console.log(my.getProject("todoist_id", todoist_project_id).notion_id || 'error');
         var req_body = {
             page_id: notion_page_id,
             properties: {
