@@ -13,10 +13,10 @@ const PORT = process.env.PORT || 3000;
 
 var app = express().use(express.urlencoded({ extended: true })).use(express.json());
 
-process.on('unhandledRejection', error => {
-    // Will print "unhandledRejection err is not defined"
-    console.log('unhandledRejection', error.reason);
-});
+// process.on('unhandledRejection', error => {
+//     // Will print "unhandledRejection err is not defined"
+//     console.log('unhandledRejection', error.reason);
+// });
 
 function message_channel(text) {
     discord.channels.fetch(process.env.LOG_CHANNEL_ID)
