@@ -74,6 +74,9 @@ var notionHelper = (function () {
     }
 
     my.updateTask = async function(notion_page_id, name, todoist_project_id, do_date, priority, in_discord) {
+        var ora_solare = '+01:00';
+        var ora_legale = '+02:00';
+        var is_dst = false;
         var req_body = {
             page_id: notion_page_id,
             properties: {
@@ -110,8 +113,9 @@ var notionHelper = (function () {
             end_dt.setHours(end_dt.getHours() + 24);
             req_body.properties.DoDate = {
                 date: {
-                    start: start_dt.toISOString().replace(/Z$/, is_dst ? ora_legale : ora_solare),
-                    end: end_dt.toISOString().replace(/Z$/, is_dst ? ora_legale : ora_solare)
+                    start: start_dt.toISOString().split('T')[0],
+                    // start: start_dt.toISOString().replace(/Z$/, is_dst ? ora_legale : ora_solare),
+                    // end: end_dt.toISOString().replace(/Z$/, is_dst ? ora_legale : ora_solare)
                 }
             }
         }
