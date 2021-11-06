@@ -123,12 +123,12 @@ var notionHelper = (function () {
         return response !== {};
     }
 
-    my.completeTask = async function (notion_page_id) {
+    my.completeTask = async function (notion_page_id, is_recurring) {
         const response = await my.api.pages.update({
             page_id: notion_page_id,
             properties: {
                 Completed: {
-                    checkbox: true
+                    checkbox: is_recurring ? false : true
                 }
             }
         });

@@ -119,7 +119,7 @@ app.post('', (req, res) => {
                     // })
                 } else {
                     if(req.body.event_name.includes('item:completed') && req.body.event_data.description !== '') {
-                        notion.completeTask(req.body.event_data.description)
+                        notion.completeTask(req.body.event_data.description, req.body.event_data.due.is_recurring)
                             .then(status => {
                                 if(status) {
                                     // later on: create tasklist function
