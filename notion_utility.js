@@ -63,8 +63,9 @@ var notionHelper = (function () {
             end_dt.setHours(end_dt.getHours() + 24);
             req_body.properties.DoDate = {
                 date: {
-                    start: start_dt.toISOString().replace(/Z$/, is_dst ? ora_legale : ora_solare),
-                    end: end_dt.toISOString().replace(/Z$/, is_dst ? ora_legale : ora_solare)
+                    start: start_dt.toISOString().split('T')[0],
+                    // start: start_dt.toISOString().replace(/Z$/, is_dst ? ora_legale : ora_solare),
+                    // end: end_dt.toISOString().replace(/Z$/, is_dst ? ora_legale : ora_solare)
                 }
             }
         }
