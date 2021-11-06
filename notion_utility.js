@@ -18,6 +18,9 @@ var notionHelper = (function () {
     }
 
     my.createTask = async function(name, todoist_project_id, todoist_task_id, do_date, priority, in_discord) {
+        var ora_solare = '+01:00';
+        var ora_legale = '+02:00';
+        var is_dst = false;
         var req_body = {
             parent: {
                 type: 'database_id',
@@ -60,8 +63,8 @@ var notionHelper = (function () {
             end_dt.setHours(end_dt.getHours() + 24);
             req_body.properties.DoDate = {
                 date: {
-                    start: start_dt.toISOString().replace(/Z$/, '+02:00'),
-                    end: end_dt.toISOString().replace(/Z$/, '+02:00')
+                    start: start_dt.toISOString().replace(/Z$/, is_dst ? ora_legale : ora_solare),
+                    end: end_dt.toISOString().replace(/Z$/, is_dst ? ora_legale : ora_solare)
                 }
             }
         }
@@ -106,8 +109,8 @@ var notionHelper = (function () {
             end_dt.setHours(end_dt.getHours() + 24);
             req_body.properties.DoDate = {
                 date: {
-                    start: start_dt.toISOString().replace(/Z$/, '+02:00'),
-                    end: end_dt.toISOString().replace(/Z$/, '+02:00')
+                    start: start_dt.toISOString().replace(/Z$/, is_dst ? ora_legale : ora_solare),
+                    end: end_dt.toISOString().replace(/Z$/, is_dst ? ora_legale : ora_solare)
                 }
             }
         }
