@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@doist/todoist-api-typescript": "^1.5.0",
     "@notionhq/client": "^0.1.9",
     "accepts": "^1.3.7",
     "array-flatten": "^1.1.1",

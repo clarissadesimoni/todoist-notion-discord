@@ -3,57 +3,58 @@ var todoistHelper = (function () {
 
     require('dotenv').config();
 
-    my.api = require('todoist-rest-api').default(process.env.TODOIST_API_KEY).v1;
+	const TodoistApi = require('@doist/todoist-api-typescript').TodoistApi
+    my.api = new TodoistApi(process.env.TODOIST_API_KEY);
 
 	my.findTask = async function (id) {
-		var res = await my.api.task.find(id);
+		var res = await my.api.getTask(id);
 		return res;
 	}
     
 
 	my.findAllTasks = async function () {
-		var res = await my.api.task.findAll();
+		var res = await my.api.getTasks();
 		return res;
 	}
     
 
 	my.createTask = async function (task) {
-		var res = await my.api.task.create(task);
+		var res = await my.api.addTask(task);
 		return res;
 	}
     
 
 	my.updateTask = async function (id, task) {
-		var res = await my.api.task.update(id, task);
+		var res = await my.api.updateTask(id, task);
 		return res;
 	}
     
 
 	my.closeTask = async function (id) {
-		var res = await my.api.task.close(id);
+		var res = await my.api.closeTask(id);
 		return res;
 	}
     
 
 	my.reopenTask = async function (id) {
-		var res = await my.api.task.reopen(id);
+		var res = await my.api.reopenTask(id);
 		return res;
 	}
     
 
 	my.removeTask = async function (id) {
-		var res = await my.api.task.remove(id);
+		var res = await my.api.deleteTask(id);
 		return res;
 	}
 
 	my.findLabel = async function (id) {
-		var res = await my.api.label.find(id);
+		var res = await my.api.getLabel(id);
 		return res;
 	}
 
 	my.findAllLabels = async function () {
 		var res = [];
-		await my.api.label.findAll().then(function (labels) {
+		await my.api.getLabels().then(function (labels) {
 			labels.forEach(label => res.push({name: label.name, id: label.id}))
 		})
 		return res;
@@ -71,7 +72,7 @@ var todoistHelper = (function () {
     }
 
 	my.findSection = async function (id) {
-		var res = await my.api.section.find(id);
+		var res = await my.api.getSection(id);
 		return res;
 	}
 
@@ -86,22 +87,28 @@ var todoistHelper = (function () {
 		return result[target][0];
 	}
 
-	my.findAllSections = async function () {
+	my.findAllSections = async function (project_id=-1) {
 		var res = [];
-		await my.api.section.findAll().then(function (sections) {
-			sections.forEach(section => res.push({name: section.name, id: section.id}))
-		})
+		if (project_id == -1) {
+			await my.api.getSections().then(function (sections) {
+				sections.forEach(section => res.push({name: section.name, id: section.id}))
+			})
+		} else {
+			await my.api.getSections(project_id=project_id).then(function (sections) {
+				sections.forEach(section => res.push({name: section.name, id: section.id}))
+			})
+		}
 		return res;
 	}
 
 	my.findProject = async function (id) {
-		var res = await my.api.project.find(id);
+		var res = await my.api.getProject(id);
 		return res;
 	}
 
 	my.findAllProjects = async function () {
 		var res = [];
-		await my.api.project.findAll().then(function (projects) {
+		await my.api.getProjects().then(function (projects) {
 			projects.forEach(project => res.push({name: project.name, id: project.id}));
 		})
 		return res;
@@ -122,3 +129,9 @@ var todoistHelper = (function () {
 }());
 
 module.exports = todoistHelper;
+
+// const t_api = require('@doist/todoist-api-typescript').TodoistApi
+// var api_inst = new t_api(process.env.TODOIST_API_KEY);
+// api_inst.getProjects()
+//     .then((projects) => console.log(projects))
+//     .catch((error) => console.log(error))
