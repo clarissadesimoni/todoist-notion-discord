@@ -12,8 +12,8 @@ var todoistHelper = (function () {
 	}
     
 
-	my.findAllTasks = async function () {
-		var res = await my.api.getTasks();
+	my.findAllTasks = async function (filter='') {
+		var res = await my.api.getTasks(filter=filter);
 		return res;
 	}
     
@@ -129,9 +129,3 @@ var todoistHelper = (function () {
 }());
 
 module.exports = todoistHelper;
-
-// const t_api = require('@doist/todoist-api-typescript').TodoistApi
-// var api_inst = new t_api(process.env.TODOIST_API_KEY);
-// api_inst.getProjects()
-//     .then((projects) => console.log(projects))
-//     .catch((error) => console.log(error))
