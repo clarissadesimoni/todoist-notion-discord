@@ -8,6 +8,14 @@
         "course_id": "bc5f8cc2-0cc1-4f40-911f-6c649704cf32"
     },
     {
+        "notion_id": "5ad4f1dc-3d75-4c31-b04d-7324d0635355",
+        "notion_name": "Diritto Informatica",
+        "todoist_id": 2285679804,
+        "todoist_name": "DirittoInformatica",
+        "course_code": "DIR",
+        "course_id": "5ef1f2d4-dfd8-4489-b4a4-5658c9f0208d"
+    },
+    {
         "notion_id": "727f2cbb-bb52-4e39-9b5c-1f30ff4268df",
         "notion_name": "Laboratorio di amministrazione di sistemi",
         "todoist_id": 2267901582,
