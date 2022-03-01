@@ -28,6 +28,7 @@
     "finalhandler": "^1.1.2",
     "forwarded": "^0.2.0",
     "fresh": "^0.5.2",
+    "googleapis": "^95.0.0",
     "http-errors": "^1.7.2",
     "iconv-lite": "^0.4.24",
     "inherits": "^2.0.3",
