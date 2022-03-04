@@ -2,10 +2,11 @@ const express = require('express');
 const Discord = require('discord.js');
 const discord = new Discord.Client();
 var crypto = require('crypto');
-const notion = require('./notion_utility'); // can call it like notion.funcName(params);
-const todoist = require('./todoist_utility'); // can call it like notion.funcName(params);
-// const tasklist = require('./tasklist_utility'); // can call it like notion.funcName(params);
-// tasklist.setup();
+const notion = require('./notion_utility');
+const todoist = require('./todoist_utility');
+const tasklist = require('./tasklist_utility');
+const {credentials} = require('./calendar_access');
+const {authorize, getAccessToken, listEvents, listAllEvents, listCalendars, getEvents} = require('./calendar_utility');
 
 require('dotenv').config();
 
@@ -56,6 +57,24 @@ function message_embed_user(msg) {
         });
 }
 
+function await_for_token(prompt) {
+    discord.users.fetch(process.env.MY_USER_ID)
+        .then(user => user.createDM())
+        .then(channel => {
+            channel.send(prompt);
+            channel.awaitMessages(msg => msg.content.startsWith('!token '), {
+                time: 30000
+            }).then(message => {
+                message = message.first()
+                return message.content.replace('!token ', '')
+            })
+        })
+        .catch(error => {
+            console.log('Error on await_for_message function');
+            console.log(error.message)
+        });
+}
+
 // var todoist_labels = [];
 
 function hasLabel(labels, target) {
@@ -64,6 +83,14 @@ function hasLabel(labels, target) {
 
 discord.on('ready', () => {
     message_user('Hey, The bot is up!');
+});
+
+discord.on('message', (msg) => {
+    if(msg.content === '!todo') {
+        tasklist.tasklist(message_user, await_for_token).then(tlist => {
+            for(var i = 0; i < tlist.length; i++) message_user(tlist[i]);
+        })
+    }
 });
 
 app.get('', (req, res) => {

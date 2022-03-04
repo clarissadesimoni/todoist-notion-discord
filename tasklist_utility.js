@@ -1,11 +1,13 @@
 let tasklistHelper = function () {
     var obj = {};
+    const {credentials} = require('./calendar_access');
+    const {authorize, getAccessToken, listEvents, listAllEvents, listCalendars, getEvents} = require('./calendar_utility');
     require('dotenv').config();
     const MongoClient = require('mongodb').MongoClient;
     const TodoistApi = require('@doist/todoist-api-typescript').TodoistApi;
     obj.todoist = new TodoistApi(process.env.TODOIST_API_KEY);
     const uri = `mongodb+srv://${process.env.DB_USER_PASSWORD}@todoist-notion-discord.4vi3s.mongodb.net/todoist-notion-discord?retryWrites=true&w=majority`;
-    // obj.mongodb = new MongoClient(uri);
+    obj.mongodb = new MongoClient(uri);
 
     function any(iterable) {
         for (var index = 0; index < iterable.length; index++) {
@@ -26,50 +28,53 @@ let tasklistHelper = function () {
     obj.all = all;
     obj.strMul = strMul;
 
-    obj.tasklist = async function() {
+    obj.tasklist = async function(message_user, await_for_token) {
 
         Date.prototype.getDiscordDate = function() {
             return `${this.getDate().toString().padStart(2, '0')}/${(this.getMonth() + 1).toString().padStart(2, '0')}/${this.getFullYear()}`;
         };
         Date.prototype.getDiscordTime = function() {
-            return `${(this.getHours() % 12).toString().padStart(2, '0')}:${this.getMinutes().toString().padStart(2, '0')} ${this.getHours() < 12 ? 'AM' : 'PM'}`;
+            return `${((this.getHours() % 12) + Math.floor(this.getHours() / 12) * 12).toString().padStart(2, '0')}:${this.getMinutes().toString().padStart(2, '0')} ${this.getHours() < 12 ? 'AM' : 'PM'}`;
         };
 
-        // await this.mongodb.connect();
-        const dbName = 'todoist-notion-discord';
+        await this.mongodb.connect();
+        const dbName = 'todoist_notion_discord';
         const collName = 'todoist';
         var sections = [];
         var projects = [];
         var labels = await this.todoist.getLabels();
         var tasklist = await this.todoist.getTasks({filter: 'due:today & @Discord'});
-        // const db_results = await this.mongodb.db(dbName).collection(collName).find({}, {projection: {_id: 1}}).toArray();
-        // if (db_results.length > 0) {
-        //     var task_ids = db_results.map(obj => obj._id);
-        //     db_tasks = await this.todoist.getTasks({ids: task_ids});
-        //     tasklist.push(...db_tasks);
-        // }
+        var today = new Date();
+        today = today.setHours(23, 59, 59, 999);
+        today = new Date(today);
+        const db_results = await this.mongodb.db(dbName).collection(collName).find({}).toArray();
+        var db_tasks = [];
+        if (db_results.length > 0) {
+            db_tasks = db_results.map(obj => obj._id);
+            if(db_tasks.length > 0) {
+                var task_ids = await this.todoist.getTasks({id: db_tasks}).then(tasks => tasks.filter(task => task.due.date === today.toISOString().split('T')[0]));
+                tasklist.push(...task_ids.filter(x => tasklist.filter(y => y.id == x.id).length == 0));
+            }
+        }
         labels = labels.reduce(function(dest, x) {
             dest[x.name] = x;
             return dest;
         }, {});
-        let today = new Date();
-        today = today.setHours(23, 59, 59, 999);
-        today = new Date(today);
-        let indent_offsets = {
+        var indent_offsets = {
             project: 0,
             section: 1,
             'task': section_name => section_name ? 2 : 1
         }
-        let indent_str = ':blank:';
-        let emotes_offset = 21;
-        let tab_to_spaces = 4;
+        var indent_str = ':blank:';
+        var emotes_offset = 21;
+        var tab_to_spaces = 4;
 
         var Project = function(obj) {
             obj.sections = {
                 0: Section({id: 0, name: 'No section'})
             };
             obj.priorityDict = function() {
-                let data = {
+                var data = {
                     1: 0,
                     2: 0,
                     3: 0,
@@ -77,35 +82,40 @@ let tasklistHelper = function () {
                     r: 0
                 }
                 for(var s in this.sections) {
-                    let tmp = this.sections[s].priorityDict();
+                    var tmp = this.sections[s].priorityDict();
                     for(var priority in data) data[priority] += tmp[priority]
                 }
                 return data;
             }
+            obj.listTaskIDs = function(completed=[false, true]) {
+                var data = [];
+                for(var s of Object.values(this.sections)) data.push(...s.listTaskIDs(completed=completed))
+                return data;
+            }
             obj.completionCount = function(countMig=false, countHabits=true) {
-                let done = 0;
-                let total = 0;
+                var done = 0;
+                var total = 0;
                 for(var s in this.sections) {
-                    let tmp = this.sections[s].completionCount(countMig=countMig, countHabits=countHabits);
+                    var tmp = this.sections[s].completionCount(countMig=countMig, countHabits=countHabits);
                     done += tmp[0];
                     total += tmp[1];
                 }
                 return [done, total];
             }
             obj.completion = function(countMig=false, countHabits=true) {
-                let counts = this.completionCount(countMig=countMig, countHabits=countHabits);
+                var counts = this.completionCount(countMig=countMig, countHabits=countHabits);
                 return counts[0]/counts[1];
             }
             obj.toString = function(completed=false) {
-                let res = '';
+                var res = '';
                 if (!completed) {
-                    let compCount = this.completionCount();
+                    var compCount = this.completionCount();
                     res = `**PROJECT: ${this.name}** (Done: ${compCount[0]}/${compCount[1]}: ${(this.completion() * 100).toFixed(2)}%)`;
                 } else res = `**PROJECT: ${this.name}**`;
-                let sec = Object.values(this.sections);
+                var sec = Object.values(this.sections);
                 sec.sort(function(a, b) {
-                    let a_dict = a.priorityDict();
-                    let b_dict = b.priorityDict();
+                    var a_dict = a.priorityDict();
+                    var b_dict = b.priorityDict();
                     if(a_dict[1] != b_dict[1]) return b_dict[1] - a_dict[1];
                     else if(a_dict[2] != b_dict[2]) return b_dict[1] - a_dict[1];
                     else if(a_dict[3] != b_dict[3]) return b_dict[2] - a_dict[2];
@@ -123,7 +133,7 @@ let tasklistHelper = function () {
         var Section = function(obj) {
             obj.tasks = [];
             obj.priorityDict = function() {
-                let data = {
+                var data = {
                     1: 0,
                     2: 0,
                     3: 0,
@@ -139,31 +149,31 @@ let tasklistHelper = function () {
                 return data;
             }
             obj.listTaskIDs = function(completed=[false, true]) {
-                let data = [];
+                var data = [];
                 for(var t of this.tasks) data.push(...t.listTaskIDs(completed=completed))
                 return data;
             }
             obj.completionCount = function(countMig=false, countHabits=true) {
-                let lh = labels['Habit'];
+                var lh = labels['Habit'];
                 if(!countMig && !countHabits) var tmp = this.tasks.filter(task => !task.mig && !(task.labels.includes(lh)));
                 else if(!countMig && countHabits) var tmp = this.tasks.filter(task => !task.mig);
                 else if(countMig && !countHabits) var tmp = this.tasks.filter(task => !(task.labels.includes(lh)));
                 else if(countMig && countHabits) var tmp = this.tasks;
-                let done = 0;
-                let total = 0;
+                var done = 0;
+                var total = 0;
                 for(var task of this.tasks) {
-                    let tmp = task.isCompleted();
+                    var tmp = task.isCompleted();
                     done += tmp[0];
                     total += tmp[1];
                 }
                 return [done, total];
             }
             obj.completion = function(countmig=false, countHabits=true) {
-                let counts = this.completionCount(countMig=countmig, countHabits=countHabits);
+                var counts = this.completionCount(countMig=countmig, countHabits=countHabits);
                 return counts[0]/counts[1];
             }
             obj.toString = function(completed=false) {
-                let res = '';
+                var res = '';
                 if (!completed) {
                     compCount = this.completionCount();
                     res = `**SECTION: ${this.name}** (Done: ${compCount[0]}/${compCount[1]}: ${(this.completion() * 100).toFixed(2)}%)`;
@@ -177,7 +187,7 @@ let tasklistHelper = function () {
                     else if(any(['PDF', 'Ex', 'Es'].map(el => a.name.startsWith(el))) && any(['PDF', 'Ex', 'Es'].map(el => b.name.startsWith(el)))) return a.name.localeCompare(b.name);
                     else return -1;
                 })
-                let data = this.tasks.filter(task => task.completed == completed);
+                var data = this.tasks.filter(task => task.completed == completed);
                 for(var task of data) {
                     if(task.subtasks.length > 0) res.push(...task.toString(this.id != 0, 0, completed))
                     else res.push(task.toString(this.id != 0, 0, completed));
@@ -188,7 +198,7 @@ let tasklistHelper = function () {
         }
         
         var MyTask = async function(source=undefined) {
-            let api_obj;
+            var api_obj;
             if(typeof source === 'number') api_obj = await this.todoist.getTask(source);
             else api_obj = source;
             return {
@@ -214,8 +224,8 @@ let tasklistHelper = function () {
                         3: ':mdot_blue',
                         4: ':mdot_grey'
                     };
-                    let ls = labels['Started'];
-                    let [done, total] = this.isCompleted(); // multiple returns: use let[a, b, c...] to save them all
+                    var ls = labels['Started'];
+                    var [done, total] = this.isCompleted(); // multiple returns: use let[a, b, c...] to save them all
                     if(this.completed) return ':mdot_greencomp: ';
                     else if(this.isHabit) return this.labels.includes(ls) ? ':mdot_lavenderstart: ' : ':mdot_lavender: ';
                     else if(!this.recurring && new Date(api_obj.due.date) > today) return emotes[5 - this.priority] + 'mig: ';
@@ -231,9 +241,9 @@ let tasklistHelper = function () {
                         else if(any(['PDF', 'Ex', 'Es'].map(el => a.name.startsWith(el))) && any(['PDF', 'Ex', 'Es'].map(el => b.name.startsWith(el)))) return a.name.localeCompare(b.name);
                         else return -1;
                     })
-                    let data = this.subtasks.filter(el => el.completed == completed);
-                    let comp = this.isCompleted();
-                    let res = `${this.bullet()}${this.name}` + (this.subtasks.length > 0 ? ` (Done: ${comp[0]}/${comp[1]}: ${(comp[0]/comp[1] * 100).toFixed(2)}%)` : '');
+                    var data = this.subtasks.filter(el => el.completed == completed);
+                    var comp = this.isCompleted();
+                    var res = `${this.bullet()}${this.name}` + (this.subtasks.length > 0 ? ` (Done: ${comp[0]}/${comp[1]}: ${(comp[0]/comp[1] * 100).toFixed(2)}%)` : '');
                     res = [strMul(indent_str, indent_offsets['task'](is_section_named) + level) + res, res.length + emotes_offset + ((indent_offsets['task'](is_section_named) + level) * (emotes_offset + indent_str.length))];
                     if(data.length > 0) {
                         res = [res];
@@ -245,16 +255,16 @@ let tasklistHelper = function () {
                     return res;
                 },
                 listTaskIDs: function(completed=[false, true]) {
-                    let data = completed.includes(this.completed) ? [this.id] : [];
+                    var data = completed.includes(this.completed) ? [this.id] : [];
                     for(var t of this.subtasks) data.push(...t.listTaskIDs());
                     return data;
                 },
                 isCompleted: function() {
                     if(this.subtasks.length > 0) {
-                        let done = 0;
-                        let total = 0;
+                        var done = 0;
+                        var total = 0;
                         for(var st of this.subtasks) {
-                            let tmp = st.isCompleted();
+                            var tmp = st.isCompleted();
                             done += tmp[0];
                             total += tmp[1];
                         }
@@ -265,17 +275,17 @@ let tasklistHelper = function () {
         }
 
         obj.completionCount = function(countMig=false, countHabits=true) {
-            let done = 0;
-            let total = 0;
+            var done = 0;
+            var total = 0;
             for(var p of Object.values(projects)) {
-                let tmp = p.completionCount(countMig=countMig, countHabits=countHabits);
+                var tmp = p.completionCount(countMig=countMig, countHabits=countHabits);
                 done += tmp[0];
                 total += tmp[1];
             }
             return [done, total];
         }
         obj.completion = function(countMig=false, countHabits=true) {
-            let counts = obj.completionCount(countMig=countMig, countHabits=countHabits);
+            var counts = obj.completionCount(countMig=countMig, countHabits=countHabits);
             return counts[0]/counts[1];
         }
 
@@ -298,25 +308,21 @@ let tasklistHelper = function () {
             sections[i] = await this.todoist.getSection(sections[i]);
             projects[sections[i].projectId].sections[sections[i].id] = Section(sections[i]);
         }
-        // sections = sections.reduce(function(dest, x) {
-        //     dest[x.id] = Section(x);
-        //     return dest;
-        // }, {});
         tasklist = tasklist.reduce(function(dest, x) {
-            let parentId = x.parentId || 0;
+            var parentId = x.parentId || 0;
             dest[parentId] = dest[parentId] || [];
             dest[parentId].push(x);
             return dest;
         }, {});
-        let parents = [];
+        var parents = [];
         for(var task of tasklist[0]) {
-            let res = await MyTask(task);
+            var res = await MyTask(task);
             parents.push(res);
         }
         for(var task of parents) {
             if(task.id in tasklist)
                 for(var i = 0; i < tasklist[t.id].length; i++) {
-                    let res = await MyTask(tasklist[t.id][i]);
+                    var res = await MyTask(tasklist[t.id][i]);
                     t.subtasks.push(res);
                 }
             else task.subtasks = [];
@@ -325,10 +331,10 @@ let tasklistHelper = function () {
             projects[task.projectId].sections[task.sectionId].tasks.push(task);
         }
 
-        let proj = Object.values(projects);
+        var proj = Object.values(projects);
         proj.sort(function(a, b) {
-            let a_dict = a.priorityDict();
-            let b_dict = b.priorityDict();
+            var a_dict = a.priorityDict();
+            var b_dict = b.priorityDict();
             if(a_dict[1] != b_dict[1]) return b_dict[1] - a_dict[1];
             else if(a_dict[2] != b_dict[2]) return b_dict[1] - a_dict[1];
             else if(a_dict[3] != b_dict[3]) return b_dict[2] - a_dict[2];
@@ -337,23 +343,27 @@ let tasklistHelper = function () {
             else return -1;
         });
 
-        let compCountAll = obj.completionCount();
-        let completionAll = obj.completion();
-        let compCountNormal = obj.completionCount(false);
-        let completionNormal = obj.completion(false);
-        let hlineNum = 19;
-        let headerEmojiDict = {
+        var compCountAll = obj.completionCount();
+        var completionAll = obj.completion();
+        var compCountNormal = obj.completionCount(false);
+        var completionNormal = obj.completion(false);
+        var hlineNum = 19;
+        var headerEmojiDict = {
             0: ':mdot_red:',
             1: ':mdot_yellowstart:',
             2: ':mdot_greencomp:'
         }
-        let body = []
-        let string = strMul(':hline:', hlineNum) + '\n' + `**${headerEmojiDict[Math.floor(completionNormal * 2)]} DAILY TASKS ${today.getDiscordDate()}** ${headerEmojiDict[Math.floor(completionNormal * 2)]} Last update: ${(new Date()).getDiscordTime()}` + '\n' + strMul(':hline:', hlineNum) + '\n';
+        var body = []
+        var string = strMul(':hline:', hlineNum) + '\n' + `**${headerEmojiDict[Math.floor(completionNormal * 2)]} DAILY TASKS ${today.getDiscordDate()}** ${headerEmojiDict[Math.floor(completionNormal * 2)]} Last update: ${(new Date()).getDiscordTime()}` + '\n' + strMul(':hline:', hlineNum) + '\n';
         body.push([string, hlineNum * 2 * emotes_offset + string.length]);
-        // body += getEvents()
+        body.push(['', 0]);
+        var authorized = await authorize(credentials, message_user, await_for_token);
+        var cals = await listCalendars(authorized);
+        var events = await getEvents(authorized, cals);
+        body.push(...events);
+        body.push(['', 0]);
         string = '**TASKS:**';
         body.push([string, string.length]);
-        // body += [p.toString() for p in tasklist.projectsToUse()]
         for(var p of proj) body.push(...p.toString());
         string = `\nDone: ${compCountAll[0]}/${compCountAll[1]}: ${completionAll.toFixed(2)}%\nNormal tasks: ${compCountNormal[0]}/${compCountNormal[1]}: ${completionNormal.toFixed(2)}%`;
         body.push([string, string.length]);
@@ -363,11 +373,19 @@ let tasklistHelper = function () {
                 body.splice(i, 2, [body[i][0] + '\n' + body[i + 1][0], body[i][1] + 1 + body[i + 1][1]]);
             } else i += 1;
         }
-        let res = body.reduce((acc, x) => acc + '\n\n\n' + x[0], '');
-        console.log(res);
-        return res;
-
-        // await this.mongodb.close();
+        var res = body.reduce((acc, x) => acc + '\n\n\n' + x[0], '');
+        var id_list = [];
+        for(var p of proj) id_list.push(...p.listTaskIDs());
+        var to_add = id_list.filter(x => !db_tasks.includes(x));
+        if(to_add.length > 0) {
+            to_add = to_add.map(x => {
+                return {_id: x};
+            });
+            await this.mongodb.db(dbName).collection(collName).insertMany(to_add);
+        }
+        await this.mongodb.close();
+        // console.log(res);
+        return body;
     }
     return obj;
 }
