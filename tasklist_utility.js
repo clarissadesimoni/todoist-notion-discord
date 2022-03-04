@@ -28,7 +28,7 @@ let tasklistHelper = function () {
     obj.all = all;
     obj.strMul = strMul;
 
-    obj.tasklist = async function(message_user, await_for_token) {
+    obj.tasklist = async function(user_channel, await_for_token) {
 
         Date.prototype.getDiscordDate = function() {
             return `${this.getDate().toString().padStart(2, '0')}/${(this.getMonth() + 1).toString().padStart(2, '0')}/${this.getFullYear()}`;
@@ -354,10 +354,10 @@ let tasklistHelper = function () {
             2: ':mdot_greencomp:'
         }
         var body = []
-        var string = strMul(':hline:', hlineNum) + '\n' + `**${headerEmojiDict[Math.floor(completionNormal * 2)]} DAILY TASKS ${today.getDiscordDate()}** ${headerEmojiDict[Math.floor(completionNormal * 2)]} Last update: ${(new Date()).getDiscordTime()}` + '\n' + strMul(':hline:', hlineNum) + '\n';
+        var string = strMul(':hline:', hlineNum) + '\n' + `**${headerEmojiDict[Math.floor(completionNormal * 2)]} DAILY TASKS ${today.getDiscordDate()} ${headerEmojiDict[Math.floor(completionNormal * 2)]}** Last update: ${(new Date()).getDiscordTime()}` + '\n' + strMul(':hline:', hlineNum) + '\n';
         body.push([string, hlineNum * 2 * emotes_offset + string.length]);
         body.push(['', 0]);
-        var authorized = await authorize(credentials, message_user, await_for_token);
+        var authorized = await authorize(credentials, user_channel, await_for_token);
         var cals = await listCalendars(authorized);
         var events = await getEvents(authorized, cals);
         body.push(...events);

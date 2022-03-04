@@ -43,7 +43,7 @@ function askQuestion(query) {
     }))
 }
 
-async function authorize(credentials, message_user, await_for_token) {
+async function authorize(credentials, user_channel, await_for_token) {
     const {client_secret, client_id, redirect_uri} = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uri[0]);
 	// Check if we have previously stored a token.
@@ -51,7 +51,7 @@ async function authorize(credentials, message_user, await_for_token) {
 		fs.readFile(TOKEN_PATH, async (err, token) => {
 			if (err) { // if token not present, generate Auth URL
 				let url = await getAccessUrl(oAuth2Client);
-				let code = await await_for_token(`Authorize the app by visiting the url ${url}`);
+				let code = await await_for_token(user_channel, `Authorize the app by visiting the url ${url}`);
 				await getAccessToken(code);
 			}
 			else { // else if token is present

@@ -13,13 +13,24 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 
 var app = express().use(express.urlencoded({ extended: true })).use(express.json());
+var log_channel = 0;
+var user_channel = 0;
+
+(async() => {
+    await discord.login(process.env.BOT_TOKEN);
+    log_channel = await discord.channels.fetch(process.env.LOG_CHANNEL_ID);
+    user_channel = await discord.users.fetch(process.env.MY_USER_ID).then(user => user.createDM());
+    app.listen(PORT, () => {
+        console.log(`App up at port ${PORT}`);
+    });
+})();
 
 // process.on('unhandledRejection', error => {
 //     // Will print "unhandledRejection err is not defined"
 //     console.log('unhandledRejection', error.reason);
 // });
 
-function message_channel(text) {
+function message_channel(channel, text) {
     discord.channels.fetch(process.env.LOG_CHANNEL_ID)
         .then(channel => channel.send(text))
         .catch(error => {
@@ -28,7 +39,7 @@ function message_channel(text) {
         });
 }
 
-function message_embed_channel(msg) {
+function message_embed_channel(channel, msg) {
     discord.channels.fetch(process.env.LOG_CHANNEL_ID)
         .then(channel => channel.send(msg))
         .catch(error => {
@@ -37,17 +48,18 @@ function message_embed_channel(msg) {
         });
 }
 
-function message_user(text) {
-    discord.users.fetch(process.env.MY_USER_ID)
+function message_user(channel, text) {
+    return discord.users.fetch(process.env.MY_USER_ID)
         .then(user => user.createDM())
         .then(channel => channel.send(text))
+        .finally(() => {console.log('The message has been sent')})
         .catch(error => {
             console.log('Error on message_user function');
             console.log(error.message)
         });
 }
 
-function message_embed_user(msg) {
+function message_embed_user(channel, msg) {
     discord.users.fetch(process.env.MY_USER_ID)
         .then(user => user.createDM())
         .then(channel => channel.send(msg))
@@ -57,38 +69,28 @@ function message_embed_user(msg) {
         });
 }
 
-function await_for_token(prompt) {
-    discord.users.fetch(process.env.MY_USER_ID)
-        .then(user => user.createDM())
-        .then(channel => {
-            channel.send(prompt);
-            channel.awaitMessages(msg => msg.content.startsWith('!token '), {
-                time: 30000
-            }).then(message => {
-                message = message.first()
-                return message.content.replace('!token ', '')
-            })
-        })
-        .catch(error => {
-            console.log('Error on await_for_message function');
-            console.log(error.message)
-        });
+async function await_for_token(channel, prompt) {
+    await message_user(channel, prompt);
+    return channel.awaitMessages(msg => msg.content.startsWith('!token '), {
+        max: 1,
+        time: 30000
+    }).then(messages => {
+        return messages.first().content.replace('!token ', '')
+    })
 }
-
-// var todoist_labels = [];
 
 function hasLabel(labels, target) {
     return labels.includes(parseInt(target));
 }
 
 discord.on('ready', () => {
-    message_user('Hey, The bot is up!');
+    message_user(user_channel, 'Hey, The bot is up!');
 });
 
 discord.on('message', (msg) => {
     if(msg.content === '!todo') {
-        tasklist.tasklist(message_user, await_for_token).then(tlist => {
-            for(var i = 0; i < tlist.length; i++) message_user(tlist[i]);
+        tasklist.tasklist(user_channel, await_for_token).then(tlist => {
+            for(var i = 0; i < tlist.length; i++) message_user(user_channel, tlist[i]);
         })
     }
 });
@@ -116,8 +118,8 @@ app.post('', (req, res) => {
                             if(res) {
                                 message_channel('The task has been added to Notion');
                             } else {
-                                message_user('There was a problem adding the task to Notion');
-                                message_user(error.message);
+                                message_user(user_channel, 'There was a problem adding the task to Notion');
+                                message_user(user_channel, error.message);
                             }
                         })
                     }
@@ -157,12 +159,12 @@ app.post('', (req, res) => {
                                     message_embed_channel(msg);
                                     message_channel('You can update your tasklist if you want');
                                 } else {
-                                    message_user('There was a problem with completing the task on Notion');
+                                    message_user(user_channel, 'There was a problem with completing the task on Notion');
                                 }
                             })
                             .catch((error) => {
-                                message_user('There was a problem completing the task in Notion');
-                                message_user(error.message);
+                                message_user(user_channel, 'There was a problem completing the task in Notion');
+                                message_user(user_channel, error.message);
                             })
                     } else {
                         if(req.body.event_name.includes('item:updated') && req.body.event_data.description !== '') {
@@ -177,12 +179,12 @@ app.post('', (req, res) => {
                                     // later on: create tasklist function
                                     message_channel('You can update your tasklist if you want');
                                 } else {
-                                    message_user('There was a problem with updating the task on Notion');
+                                    message_user(user_channel, 'There was a problem with updating the task on Notion');
                                 }
                             })
                             .catch((error) => {
-                                message_user('There was a problem updating the task in Notion');
-                                message_user(error.message);
+                                message_user(user_channel, 'There was a problem updating the task in Notion');
+                                message_user(user_channel, error.message);
                             })
                             // todoist.getLabel('name', 'Discord')
                             // .then(function(labelDiscord) {
@@ -212,12 +214,12 @@ app.post('', (req, res) => {
                                             message_embed_channel(msg);
                                             message_channel('You can update your tasklist if you want');
                                         } else {
-                                            message_user('There was a problem with deleting the task on Notion');
+                                            message_user(user_channel, 'There was a problem with deleting the task on Notion');
                                         }
                                     })
                                     .catch((error) => {
-                                        message_user('There was a problem deleting the task in Notion');
-                                        message_user(error.message);
+                                        message_user(user_channel, 'There was a problem deleting the task in Notion');
+                                        message_user(user_channel, error.message);
                                     })
                             } else {
                                 if(req.body.event_name.includes('item:uncompleted') && req.body.event_data.description !== '') {
@@ -231,12 +233,12 @@ app.post('', (req, res) => {
                                                 message_embed_channel(msg);
                                                 message_channel('You can update your tasklist if you want');
                                             } else {
-                                                message_user('There was a problem with uncompleting the task on Notion');
+                                                message_user(user_channel, 'There was a problem with uncompleting the task on Notion');
                                             }
                                         })
                                         .catch((error) => {
-                                            message_user('There was a problem uncompleting the task in Notion');
-                                            message_user(error.message);
+                                            message_user(user_channel, 'There was a problem uncompleting the task in Notion');
+                                            message_user(user_channel, error.message);
                                         })
                                 }
                             }
@@ -265,17 +267,11 @@ app.post('', (req, res) => {
         //     console.log(req.body);
         // }
     } else {
-        message_user('A 400 (Bad request) status code has been sent to a request');
+        message_user(user_channel, 'A 400 (Bad request) status code has been sent to a request');
         res.status(400).send('Bad request');
     }
 })
 
-
-discord.login(process.env.BOT_TOKEN);
-
-app.listen(PORT, () => {
-	console.log(`App up at port ${PORT}`);
-});
 
 // fetch('https://api.todoist.com/rest/v1/labels', {headers: {'Authorization': `Bearer ${process.env.TODOIST_API_KEY}`}})
 // then(labels => labels.json())
