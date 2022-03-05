@@ -31,42 +31,66 @@ var user_channel = 0;
 // });
 
 function message_channel(channel, text) {
-    discord.channels.fetch(process.env.LOG_CHANNEL_ID)
-        .then(channel => channel.send(text))
-        .catch(error => {
-            console.log('Error on message_channel function');
-            console.log(error.message)
-        });
+    try {
+        return channel.send(text);
+    } catch (error) {
+        console.log('Error on message_channel function');
+        console.log(error.message);
+    }
+    // discord.channels.fetch(process.env.LOG_CHANNEL_ID)
+    //     .then(channel => channel.send(text))
+    //     .catch(error => {
+    //         console.log('Error on message_channel function');
+    //         console.log(error.message)
+    //     });
 }
 
 function message_embed_channel(channel, msg) {
-    discord.channels.fetch(process.env.LOG_CHANNEL_ID)
-        .then(channel => channel.send(msg))
-        .catch(error => {
-            console.log('Error on message_embed_channel function');
-            console.log(error.message)
-        });
+    try {
+        return channel.send(text);
+    } catch (error) {
+        console.log('Error on message_embed_channel function');
+        console.log(error.message);
+    }
+    // discord.channels.fetch(process.env.LOG_CHANNEL_ID)
+    //     .then(channel => channel.send(msg))
+    //     .catch(error => {
+    //         console.log('Error on message_embed_channel function');
+    //         console.log(error.message)
+    //     });
 }
 
 function message_user(channel, text) {
-    return discord.users.fetch(process.env.MY_USER_ID)
-        .then(user => user.createDM())
-        .then(channel => channel.send(text))
-        .finally(() => {console.log('The message has been sent')})
-        .catch(error => {
-            console.log('Error on message_user function');
-            console.log(error.message)
-        });
+    try {
+        return channel.send(text);
+    } catch (error) {
+        console.log('Error on message_user function');
+        console.log(error.message);
+    }
+    // return discord.users.fetch(process.env.MY_USER_ID)
+    //     .then(user => user.createDM())
+    //     .then(channel => channel.send(text))
+    //     .finally(() => {console.log('The message has been sent')})
+    //     .catch(error => {
+    //         console.log('Error on message_user function');
+    //         console.log(error.message)
+    //     });
 }
 
 function message_embed_user(channel, msg) {
-    discord.users.fetch(process.env.MY_USER_ID)
-        .then(user => user.createDM())
-        .then(channel => channel.send(msg))
-        .catch(error => {
-            console.log('Error on message_embed_user function');
-            console.log(error.message)
-        });
+    try {
+        return channel.send(msg);
+    } catch (error) {
+        console.log('Error on message_user function');
+        console.log(error.message);
+    }
+    // return discord.users.fetch(process.env.MY_USER_ID)
+    //     .then(user => user.createDM())
+    //     .then(channel => channel.send(msg))
+    //     .catch(error => {
+    //         console.log('Error on message_embed_user function');
+    //         console.log(error.message)
+    //     });
 }
 
 async function await_for_token(channel, prompt) {

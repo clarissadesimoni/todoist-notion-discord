@@ -321,9 +321,9 @@ let tasklistHelper = function () {
         }
         for(var task of parents) {
             if(task.id in tasklist)
-                for(var i = 0; i < tasklist[t.id].length; i++) {
-                    var res = await MyTask(tasklist[t.id][i]);
-                    t.subtasks.push(res);
+                for(var i = 0; i < tasklist[task.id].length; i++) {
+                    var res = await MyTask(tasklist[task.id][i]);
+                    task.subtasks.push(res);
                 }
             else task.subtasks = [];
         }
